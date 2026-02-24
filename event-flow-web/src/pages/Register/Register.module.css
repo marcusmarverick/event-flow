@@ -1,0 +1,234 @@
+/* ─── Headline do painel de marca ──────────────────── */
+.brandHeadline {
+  font-family: 'Palatino Linotype', Palatino, Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.18;
+  margin-bottom: 16px;
+  letter-spacing: -0.8px;
+}
+
+.brandHeadline em {
+  color: var(--teal);
+  font-style: normal;
+}
+
+.brandSub {
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 280px;
+}
+
+/* Feature list */
+.featureList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 14px;
+}
+
+.featureItem strong {
+  color: white;
+}
+
+.featureDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--teal);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.featureDotAmber {
+  background: var(--amber);
+}
+
+/* ─── Cabeçalho do form ─────────────────────────────── */
+.formHeader {
+  margin-bottom: 28px;
+}
+
+.formTitle {
+  font-family: 'Palatino Linotype', Palatino, Georgia, serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: -0.4px;
+  margin-bottom: 8px;
+}
+
+.formSubtitle {
+  color: var(--text-mid);
+  font-size: 14px;
+}
+
+.link {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* ─── Toggle Participante / Organizador ─────────────── */
+.typeToggle {
+  display: flex;
+  background: var(--input-bg);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 24px;
+  gap: 4px;
+}
+
+.toggleBtn {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-mid);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.1px;
+}
+
+.toggleBtn:hover:not(.toggleBtnActive) {
+  color: var(--text-dark);
+}
+
+.toggleBtnActive {
+  background: white;
+  color: var(--navy);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+}
+
+/* ─── Campos ────────────────────────────────────────── */
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dark);
+  letter-spacing: 0.15px;
+}
+
+.fieldInputWrap {
+  position: relative;
+}
+
+.fieldIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px 12px 44px;
+  background: var(--input-bg);
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  font-size: 15px;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+  border-color: var(--teal);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+}
+
+.input::placeholder {
+  color: var(--text-light);
+}
+
+/* CPF — animação de mostrar/ocultar */
+.cpfField {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  max-height: 90px;
+  opacity: 1;
+}
+
+.cpfFieldHidden {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0 !important;
+  pointer-events: none;
+}
+
+/* ─── Erro ──────────────────────────────────────────── */
+.errorMsg {
+  font-size: 13px;
+  color: var(--error);
+  margin-bottom: 12px;
+}
+
+/* ─── Botão primário ────────────────────────────────── */
+.btnPrimary {
+  width: 100%;
+  padding: 13px;
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: var(--navy-mid);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(15, 27, 53, 0.28);
+}
+
+.btnPrimary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.65;
+}
+
+/* ─── Link de rodapé ────────────────────────────────── */
+.formLinkRow {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-mid);
+  margin-top: 20px;
+}

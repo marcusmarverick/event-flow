@@ -1,0 +1,152 @@
+/* ─── Split Layout ──────────────────────────────────── */
+.split {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ─── Painel de marca (esquerda) ────────────────────── */
+.brandPanel {
+  width: 42%;
+  min-width: 320px;
+  background: var(--navy);
+  padding: 52px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow radial de fundo */
+.brandPanel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 15%, rgba(20, 184, 166, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 85% 85%, rgba(245, 158, 11, 0.12) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* Dot grid sutil */
+.brandPanel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.065) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+.brandContent,
+.brandFooter {
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 56px;
+}
+
+.logoIcon {
+  width: 42px;
+  height: 42px;
+}
+
+.logoText {
+  font-size: 21px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.logoText span {
+  color: var(--teal);
+}
+
+/* Rodapé da brand */
+.brandFooterText {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+/* ─── Painel do formulário (direita) ────────────────── */
+.formPanel {
+  flex: 1;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  gap: 8px;
+}
+
+/* Toggle de navegação Login / Cadastro */
+.authTabs {
+  display: flex;
+  background: var(--input-bg);
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 8px;
+}
+
+.authTab {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 9px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.1px;
+}
+
+.authTab:hover:not(.authTabActive) {
+  color: var(--text-dark);
+}
+
+.authTabActive {
+  background: var(--white);
+  color: var(--navy);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+  animation: fadeUp 0.4s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Responsive ────────────────────────────────────── */
+@media (max-width: 800px) {
+  .brandPanel {
+    display: none;
+  }
+
+  .formPanel {
+    padding: 40px 24px;
+  }
+}

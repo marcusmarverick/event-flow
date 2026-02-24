@@ -202,21 +202,21 @@
 
 ## 🏗️ Banco de Dados
 
-- [ ] **BE:** Criar tabela `users`
-  - [ ] id, type (participant/organizer), email, password_hash, name, cpf (nullable), created_at, updated_at
+- [✅] **BE:** Criar tabela `users`
+  - [✅] id, type (participant/organizer), email, password_hash, name, cpf (nullable), created_at, updated_at
 
-- [ ] **BE:** Criar tabela `events`
-  - [ ] id, user_id, name, description, date_time, location, capacity, created_at, updated_at
+- [✅] **BE:** Criar tabela `events`
+  - [✅] id, user_id, name, description, date_time, location, capacity, created_at, updated_at
 
-- [ ] **BE:** Criar tabela `registrations`
-  - [ ] id, user_id, event_id, created_at
+- [✅] **BE:** Criar tabela `registrations`
+  - [✅] id, user_id, event_id, created_at
 
-- [ ] **BE:** Criar índices para performance
-  - [ ] Índice em `users.email`
-  - [ ] Índice em `users.cpf`
-  - [ ] Índice em `events.user_id`
-  - [ ] Índice em `registrations.user_id`
-  - [ ] Índice em `registrations.event_id`
+- [✅] **BE:** Criar índices para performance
+  - [✅] Índice em `users.email`
+  - [✅] Índice em `users.cpf`
+  - [✅] Índice em `events.user_id`
+  - [✅] Índice em `registrations.user_id`
+  - [✅] Índice em `registrations.event_id`
 
 ---
 

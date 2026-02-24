@@ -1,8 +1,8 @@
 import { Exception } from '@adonisjs/core/exceptions'
+import { inject } from '@adonisjs/core'
 import User from '#models/user'
 import UserRepository from '#repositories/user_repository'
 import type { RegisterUserDto } from '#dtos/auth_dto'
-import { inject } from '@adonisjs/core'
 
 @inject()
 export default class RegisterUserUseCase {
@@ -29,8 +29,8 @@ export default class RegisterUserUseCase {
     }
 
     const user = await this.userRepository.create(dto)
-    const token = await User.accessTokens.create(user)
+    const token = await this.userRepository.createToken(user)
 
-    return { user, token: { value: token.value!.release() } }
+    return { user, token }
   }
 }

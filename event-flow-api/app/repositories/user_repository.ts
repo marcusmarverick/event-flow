@@ -22,4 +22,13 @@ export default class UserRepository {
       cpf: dto.cpf ?? null,
     })
   }
+
+  async verifyCredentials(email: string, password: string): Promise<User> {
+    return User.verifyCredentials(email, password)
+  }
+
+  async createToken(user: User): Promise<{ value: string }> {
+    const token = await User.accessTokens.create(user)
+    return { value: token.value!.release() }
+  }
 }

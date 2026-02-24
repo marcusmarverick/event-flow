@@ -15,3 +15,8 @@ export interface RegisterUserResponse {
   }
   user: any
 }
+
+export interface LoginUserDto {
+  email: string
+  password: string
+}

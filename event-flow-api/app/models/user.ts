@@ -11,7 +11,7 @@ import UuidBase from './base/uuid_base.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
-  passwordColumnName: 'password_hash',
+  passwordColumnName: 'passwordHash',
 })
 
 export default class User extends compose(UuidBase, AuthFinder) {

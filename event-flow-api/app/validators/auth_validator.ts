@@ -10,3 +10,10 @@ export const registerUserValidator = vine.compile(
     cpf: vine.string().fixedLength(11).optional(),
   })
 )
+
+export const loginUserValidator = vine.compile(
+  vine.object({
+    email: vine.string().email().normalizeEmail(),
+    password: vine.string().minLength(1),
+  })
+)

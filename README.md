@@ -28,11 +28,37 @@ Este repositório contém duas aplicações principais:
 
 - Node.js 18+
 - npm ou yarn
+- Docker e Docker Compose (opcional, para banco de dados)
 
 ### API
 
+#### Opção 1: Usando Docker Compose (Recomendado)
+
 ```bash
 cd event-flow-api
+
+# Criar arquivo .env com as variáveis de ambiente necessárias
+# (APP_NAME, DB_USER, DB_PASSWORD, DB_DATABASE)
+
+# Iniciar o banco de dados PostgreSQL
+docker-compose up -d
+
+# Instalar dependências
+npm install
+
+# Executar migrações do banco de dados
+npm run migration:latest
+
+# Iniciar servidor (porta 3333)
+npm run dev
+```
+
+#### Opção 2: Sem Docker
+
+```bash
+cd event-flow-api
+
+# Certifique-se de ter PostgreSQL instalado e configurado
 
 # Instalar dependências
 npm install

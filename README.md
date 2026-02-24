@@ -82,7 +82,21 @@ npm start
 - **Propriedade:** Organizadores só podem modificar seus próprios eventos
 - **Dados obrigatórios:** Nome, Data/Hora, Localização e Capacidade Máxima
 
-## 👥 Contribuidores
+## � Banco de Dados
+
+Você pode visualizar o diagrama e a documentação completa do banco de dados:
+
+🔗 [Diagrama do Banco de Dados - Eraser.io](https://app.eraser.io/workspace/a61xaBHx6spEebsKMBdn?origin=share)
+
+O banco de dados contém as seguintes tabelas principais:
+
+- **users** - Usuários (Participantes e Organizadores)
+- **participants** - Dados específicos de Participantes
+- **organizers** - Dados específicos de Organizadores
+- **events** - Eventos criados por Organizadores
+- **registrations** - Inscrições de Participantes em Eventos
+
+## �👥 Contribuidores
 
 Projeto desenvolvido como trabalho da faculdade em grupo.
 

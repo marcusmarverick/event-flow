@@ -16,13 +16,13 @@
 
 ### Frontend
 
-- [ ] **RF01-FE:** Criar página de Login
-  - [ ] Campo de email/usuário
-  - [ ] Campo de senha
-  - [ ] Botão de login com feedback
-  - [ ] Tratamento de erros
-  - [ ] Redirecionamento após login bem-sucedido
-  - [ ] Armazenamento seguro do token (localStorage/sessionStorage)
+- [✅] **RF01-FE:** Criar página de Login
+  - [✅] Campo de email/usuário
+  - [✅] Campo de senha
+  - [✅] Botão de login com feedback
+  - [🟨] Tratamento de erros
+  - [🟨] Redirecionamento após login bem-sucedido
+  - [✅] Armazenamento seguro do token (localStorage/sessionStorage)
 
 ---
 
@@ -57,12 +57,11 @@
 
 ### Frontend
 
-- [ ] **RF02-FE:** Criar página de Cadastro de Participante
-  - [ ] Formulário com Nome, E-mail, CPF, Senha
-  - [ ] Validações de entrada
-  - [ ] Enviar para API
-  - [ ] Feedback de sucesso/erro
-  - [ ] Redirecionamento para login
+- [✅] **RF02-FE:** Criar página de Cadastro de Participante
+  - [✅] Formulário com Nome, E-mail, CPF, Senha
+  - [✅] Validações de entrada
+  - [✅] Enviar para API
+  - [✅] Feedback de sucesso/erro
 
 - [ ] **RF03-FE:** Criar página de Edição de Perfil
   - [ ] Carregar dados atuais do participante
@@ -123,12 +122,11 @@
 
 ### Frontend
 
-- [ ] **RF06-FE:** Criar página de Cadastro de Organizador
-  - [ ] Formulário com Nome, E-mail, Senha
-  - [ ] Validações de entrada
-  - [ ] Enviar para API
-  - [ ] Feedback de sucesso/erro
-  - [ ] Redirecionamento para login
+- [✅] **RF06-FE:** Criar página de Cadastro de Organizador
+  - [✅] Formulário com Nome, E-mail, Senha
+  - [✅] Validações de entrada
+  - [✅] Enviar para API
+  - [✅] Feedback de sucesso/erro
 
 - [ ] **RF07-FE:** Criar página de Criar Evento
   - [ ] Formulário com: Nome, Data, Hora, Localização, Capacidade
@@ -255,14 +253,14 @@
 
 ## 🚀 Status Geral
 
-| Módulo         | Backend | Frontend | Status  |
-| -------------- | ------- | -------- | ------- |
-| Autenticação   | ⬜      | ⬜       | A fazer |
-| Participante   | ⬜      | ⬜       | A fazer |
-| Organizador    | ⬜      | ⬜       | A fazer |
-| Eventos        | ⬜      | ⬜       | A fazer |
-| Banco de Dados | ⬜      | -        | A fazer |
-| Design/UX      | -       | ⬜       | A fazer |
+| Módulo         | Backend | Frontend | Status       |
+| -------------- | :-----: | :------: | ------------ |
+| Autenticação   |   ✅    |    ⬜    | BE concluído |
+| Participante   |   🟨    |    ⬜    | Em progresso |
+| Organizador    |   🟨    |    ⬜    | Em progresso |
+| Eventos        |   ⬜    |    ⬜    | A fazer      |
+| Banco de Dados |   ✅    |    -     | Concluído    |
+| Design/UX      |    -    |    🟨    | Em progresso |
 
 ---
 

@@ -1,7 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../../components/AuthLayout';
+import { useAuth } from '../../hooks/useAuth';
+import { login } from '../../services/authService';
 import styles from './Login.module.css';
+
+/* Extrai mensagem de erro da resposta da API */
+function getApiError(err) {
+  return err?.response?.data?.message || 'Ocorreu um erro. Tente novamente.';
+}
 
 /* Ícones SVG inline */
 function IconEmail() {
@@ -56,6 +63,9 @@ function BrandContent() {
 
 /* Página de Login */
 function Login() {
+  const navigate = useNavigate();
+  const { saveSession } = useAuth();
+
   const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -65,7 +75,7 @@ function Login() {
     setError('');
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (!form.email || !form.password) {
@@ -74,8 +84,20 @@ function Login() {
     }
 
     setLoading(true);
-    // TODO: integrar com a API — POST /auth/login
-    setTimeout(() => setLoading(false), 1500);
+    setError('');
+
+    try {
+      const { user, token } = await login({
+        email: form.email,
+        password: form.password,
+      });
+      saveSession(token.value, user);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(getApiError(err));
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

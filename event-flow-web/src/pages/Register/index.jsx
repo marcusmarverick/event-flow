@@ -1,7 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../../components/AuthLayout';
+import { useAuth } from '../../hooks/useAuth';
+import { register } from '../../services/authService';
 import styles from './Register.module.css';
+
+/* Extrai mensagem de erro da resposta da API */
+function getApiError(err) {
+  return err?.response?.data?.message || 'Ocorreu um erro. Tente novamente.';
+}
 
 /* Ícones SVG inline */
 function IconUser() {
@@ -91,6 +98,9 @@ function BrandContent() {
 
 /* Página de Cadastro */
 function Register() {
+  const navigate = useNavigate();
+  const { saveSession } = useAuth();
+
   const [type, setType] = useState('participant'); // 'participant' | 'organizer'
   const [form, setForm] = useState({
     name: '',
@@ -116,7 +126,7 @@ function Register() {
     setError('');
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     const isParticipant = type === 'participant';
@@ -131,8 +141,26 @@ function Register() {
     }
 
     setLoading(true);
-    // TODO: integrar com a API — POST /auth/register
-    setTimeout(() => setLoading(false), 1500);
+    setError('');
+
+    try {
+      const payload = {
+        type,
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        // CPF sem máscara — API espera 11 dígitos (fixedLength(11))
+        ...(isParticipant && { cpf: form.cpf.replace(/\D/g, '') }),
+      };
+
+      const { user, token } = await register(payload);
+      saveSession(token.value, user);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(getApiError(err));
+    } finally {
+      setLoading(false);
+    }
   }
 
   const isParticipant = type === 'participant';

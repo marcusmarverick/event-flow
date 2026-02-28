@@ -44,9 +44,6 @@ function AuthLayout({ brandContent, children }) {
           </div>
         </div>
 
-        {/* ── LINHA DIVISÓRIA ── */}
-        <div className={styles.divider} />
-
         {/* ── PAINEL DIREITO — LIGHT ── */}
         <div className={styles.formPanel}>
 

@@ -4,6 +4,10 @@ import AuthLayout from '../../components/AuthLayout';
 import { useAuth } from '../../hooks/useAuth';
 import { register } from '../../services/authService';
 import styles from './Register.module.css';
+import eventoImg from '../../assets/images/auth/evento.jpg';
+import workshopImg from '../../assets/images/auth/workshop.jpg';
+import organizerImg from '../../assets/images/auth/organizer.jpg';
+import networkingImg from '../../assets/images/auth/networking.jpg';
 
 /* Extrai mensagem de erro da resposta da API */
 function getApiError(err) {
@@ -101,7 +105,7 @@ function BrandContent({ type }) {
         {/* Card principal — sempre aparece */}
         <div className={styles.imageCard}>
           <img
-            src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80"
+            src={eventoImg}
             alt="Evento"
           />
           <div className={styles.liveBadge}>
@@ -115,10 +119,7 @@ function BrandContent({ type }) {
         <div className={styles.imageCardsRow}>
           <div className={styles.imageCardSmall}>
             <img
-              src={isParticipant
-                ? "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400&q=80"
-                : "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=400&q=80"
-              }
+              src={isParticipant ? workshopImg : organizerImg}
               alt={isParticipant ? "Workshop" : "Organize"}
             />
             <p className={`${styles.imageCardCaption} ${!isParticipant ? styles.imageCardCaptionLarge : ''}`}>
@@ -129,7 +130,7 @@ function BrandContent({ type }) {
             {isParticipant && (
             <div className={styles.imageCardSmall}>
               <img
-                src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&q=80"
+                src={networkingImg}
                 alt="Networking"
               />
               <p className={styles.imageCardCaption}>🤝 Networking</p>
@@ -211,7 +212,6 @@ function Register() {
   const isParticipant = type === 'participant';
 
   return (
-    /* passa type para BrandContent via prop */
     <AuthLayout brandContent={<BrandContent type={type} />}>
       <div className={styles.formHeader}>
         <h2 className={styles.formTitle}>Criar conta</h2>

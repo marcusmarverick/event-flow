@@ -4,6 +4,7 @@ import AuthLayout from '../../components/AuthLayout';
 import { useAuth } from '../../hooks/useAuth';
 import { login } from '../../services/authService';
 import styles from './Login.module.css';
+import eventoImg from '../../assets/images/auth/evento.jpg';
 
 /* Extrai mensagem de erro da resposta da API */
 function getApiError(err) {
@@ -60,7 +61,7 @@ function BrandContent() {
       {/* Card de imagem */}
       <div className={styles.imageCard}>
         <img
-          src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80"
+          src={eventoImg}
           alt="Evento"
         />
         <div className={styles.liveBadge}>

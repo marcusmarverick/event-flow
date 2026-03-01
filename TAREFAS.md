@@ -102,18 +102,18 @@
   - [✅] Associar evento ao organizador logado
   - [✅] Salvar no banco de dados
 
-- [ ] **RF08-BE:** Editar evento (PUT `/events/:id`)
-  - [ ] Validar autenticação
-  - [ ] Validar propriedade do evento (RN04)
-  - [ ] Permitir editar: Nome, Data/Hora, Localização, Capacidade
-  - [ ] Salvar mudanças
+- [✅] **RF08-BE:** Editar evento (PUT `/events/:id`)
+  - [✅] Validar autenticação
+  - [✅] Validar propriedade do evento (RN04)
+  - [✅] Permitir editar: Nome, Data/Hora, Localização, Capacidade
+  - [✅] Salvar mudanças
 
-- [ ] **RF09-BE:** Deletar evento (DELETE `/events/:id`)
-  - [ ] Validar autenticação
-  - [ ] Validar propriedade do evento (RN04)
-  - [ ] Verificar se há inscritos
-  - [ ] Retornar erro 409 se houver inscritos
-  - [ ] Deletar se vazio
+- [✅] **RF09-BE:** Deletar evento (DELETE `/events/:id`)
+  - [✅] Validar autenticação
+  - [✅] Validar propriedade do evento (RN04)
+  - [✅] Verificar se há inscritos
+  - [✅] Retornar erro 409 se houver inscritos
+  - [✅] Deletar se vazio
 
 - [ ] **RF10-BE:** Listar participantes do evento (GET `/events/:id/participants`)
   - [ ] Validar autenticação

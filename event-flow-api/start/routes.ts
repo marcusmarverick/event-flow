@@ -40,4 +40,5 @@ router.group(() => {
   router.post('/', [EventsController, 'store'])
   router.put('/:id', [EventsController, 'update'])
   router.delete('/:id', [EventsController, 'destroy'])
+  router.get('/:id/participants', [EventsController, 'participants'])
 }).prefix('/events').use(middleware.auth())

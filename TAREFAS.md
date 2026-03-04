@@ -44,16 +44,16 @@
   - [✅] Validar CPF imutável (não aceito no body)
   - [✅] Validar email único (excluindo o atual)
 
-- [ ] **RF04-BE:** Listar eventos inscritos do participante (GET `/participants/:id/events`)
-  - [ ] Validar autenticação
-  - [ ] Retornar apenas eventos do participante logado
-  - [ ] Incluir dados do evento e status da inscrição
-
-- [✅] **RF05-BE:** Cancelar inscrição em evento (DELETE `/registrations/:id`)
+- [✅] **RF04-BE:** Listar eventos inscritos do participante (GET `/participants/:id/events`)
   - [✅] Validar autenticação
-  - [✅] Validar propriedade da inscrição
-  - [✅] Remover inscrição do banco
-  - [✅] Atualizar contagem de participantes
+  - [✅] Retornar apenas eventos do participante logado
+  - [✅] Incluir dados do evento e status da inscrição
+
+- [ ] **RF05-BE:** Cancelar inscrição em evento (DELETE `/registrations/:id`)
+  - [ ] Validar autenticação
+  - [ ] Validar propriedade da inscrição
+  - [ ] Remover inscrição do banco
+  - [ ] Atualizar contagem de participantes
 
 ### Frontend
 

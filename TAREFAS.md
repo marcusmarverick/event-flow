@@ -115,10 +115,10 @@
   - [✅] Retornar erro 409 se houver inscritos
   - [✅] Deletar se vazio
 
-- [ ] **RF10-BE:** Listar participantes do evento (GET `/events/:id/participants`)
-  - [ ] Validar autenticação
-  - [ ] Validar propriedade do evento
-  - [ ] Retornar lista com: Nome, E-mail, Data de inscrição
+- [✅] **RF10-BE:** Listar participantes do evento (GET `/events/:id/participants`)
+  - [✅] Validar autenticação
+  - [✅] Validar propriedade do evento
+  - [✅] Retornar lista com: Nome, E-mail, Data de inscrição
 
 ### Frontend
 

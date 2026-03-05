@@ -123,7 +123,6 @@ function Hero() {
           <div className={styles.artworkCard}>
             <div className={styles.artworkHeader}>
               <h2 className={styles.artworkTitle}>Eventos em Destaque</h2>
-              <span className={styles.artworkArrow}>›</span>
             </div>
 
             <div className={styles.artworkGrid}>

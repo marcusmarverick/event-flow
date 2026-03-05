@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Navbar.module.css';
 
@@ -16,6 +17,8 @@ function LogoIcon() {
 }
 
 function Navbar() {
+  const [open, setOpen] = useState(false);
+
   return (
     <nav className={styles.nav}>
       <Link to="/" className={styles.logo}>
@@ -25,6 +28,7 @@ function Navbar() {
         </span>
       </Link>
 
+      {/* Links — desktop */}
       <ul className={styles.navLinks}>
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#funcionalidades">Funcionalidades</a></li>
@@ -33,12 +37,44 @@ function Navbar() {
         <li><a href="#contato">Contato</a></li>
       </ul>
 
+      {/* Botões — desktop */}
       <div className={styles.navActions}>
         <Link to="/login" className={styles.btnGhost}>Entrar</Link>
         <Link to="/register" className={styles.btnCta}>
           <span className={styles.btnCtaDot} />
           Criar conta
         </Link>
+      </div>
+
+      {/* Hamburguer — mobile */}
+      <button
+        className={`${styles.hamburger} ${open ? styles.hamburgerOpen : ''}`}
+        onClick={() => setOpen(o => !o)}
+        aria-label="Menu"
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+
+      {/* Menu mobile */}
+      <div className={`${styles.mobileMenu} ${open ? styles.mobileMenuOpen : ''}`}>
+        <ul className={styles.mobileLinks}>
+          <li><a href="#sobre" onClick={() => setOpen(false)}>Sobre</a></li>
+          <li><a href="#funcionalidades" onClick={() => setOpen(false)}>Funcionalidades</a></li>
+          <li><a href="#como-funciona" onClick={() => setOpen(false)}>Como funciona</a></li>
+          <li><a href="#eventos" onClick={() => setOpen(false)}>Eventos</a></li>
+          <li><a href="#contato" onClick={() => setOpen(false)}>Contato</a></li>
+        </ul>
+        <div className={styles.mobileActions}>
+          <Link to="/login" className={styles.btnGhost} onClick={() => setOpen(false)}>
+            Entrar
+          </Link>
+          <Link to="/register" className={styles.btnCta} onClick={() => setOpen(false)}>
+            <span className={styles.btnCtaDot} />
+            Criar conta
+          </Link>
+        </div>
       </div>
     </nav>
   );

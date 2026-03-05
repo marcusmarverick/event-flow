@@ -3,7 +3,7 @@ import styles from './Hero.module.css';
 
 const slides = [
   {
-    title: 'Summit de Inovação 2025',
+    title: 'Summit de Inovação',
     description: 'O maior encontro de tecnologia e inovação do Brasil. Palestras, workshops e networking com os maiores nomes do setor.',
     img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80',
   },
@@ -20,11 +20,27 @@ const slides = [
 ];
 
 const gridEvents = [
-  { img: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=400&q=80' },
-  { img: 'https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=400&q=80' },
-  { img: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=400&q=80' },
-  { img: 'https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=400&q=80' },
-  ];
+  {
+    img: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=400&q=80',
+    title: 'Summit de Inovação',
+    category: 'Tecnologia',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80',
+    title: 'Hackathon Dev Connect',
+    category: 'Programação',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400&q=80',
+    title: 'Festival de Design',
+    category: 'Design & UX',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400&q=80',
+    title: 'Conferência de IA',
+    category: 'Inteligência Artificial',
+  },
+];
 
 const destaques = [
   'Hackathon Dev Connect',
@@ -113,7 +129,11 @@ function Hero() {
             <div className={styles.artworkGrid}>
               {gridEvents.map((ev, i) => (
                 <div key={i} className={styles.artworkItem}>
-                  <img src={ev.img} alt={`Evento ${i + 1}`} className={styles.artworkImg} />
+                  <img src={ev.img} alt={ev.title} className={styles.artworkImg} />
+                  <div className={styles.artworkOverlay}>
+                    <span className={styles.artworkCategory}>{ev.category}</span>
+                    <p className={styles.artworkEventTitle}>{ev.title}</p>
+                  </div>
                 </div>
               ))}
             </div>

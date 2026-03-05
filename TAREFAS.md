@@ -44,10 +44,10 @@
   - [✅] Validar CPF imutável (não aceito no body)
   - [✅] Validar email único (excluindo o atual)
 
-- [ ] **RF04-BE:** Listar eventos inscritos do participante (GET `/participants/:id/events`)
-  - [ ] Validar autenticação
-  - [ ] Retornar apenas eventos do participante logado
-  - [ ] Incluir dados do evento e status da inscrição
+- [✅] **RF04-BE:** Listar eventos inscritos do participante (GET `/participants/:id/events`)
+  - [✅] Validar autenticação
+  - [✅] Retornar apenas eventos do participante logado
+  - [✅] Incluir dados do evento e status da inscrição
 
 - [ ] **RF05-BE:** Cancelar inscrição em evento (DELETE `/registrations/:id`)
   - [ ] Validar autenticação
@@ -115,10 +115,10 @@
   - [✅] Retornar erro 409 se houver inscritos
   - [✅] Deletar se vazio
 
-- [ ] **RF10-BE:** Listar participantes do evento (GET `/events/:id/participants`)
-  - [ ] Validar autenticação
-  - [ ] Validar propriedade do evento
-  - [ ] Retornar lista com: Nome, E-mail, Data de inscrição
+- [✅] **RF10-BE:** Listar participantes do evento (GET `/events/:id/participants`)
+  - [✅] Validar autenticação
+  - [✅] Validar propriedade do evento
+  - [✅] Retornar lista com: Nome, E-mail, Data de inscrição
 
 ### Frontend
 

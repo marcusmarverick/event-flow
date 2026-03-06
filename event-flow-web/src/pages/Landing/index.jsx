@@ -7,6 +7,7 @@ import Features from './components/Features';
 import HowItWorks from './components/HowItWorks';
 import EventsHighlight from './components/EventsHighlight';
 import Instagram from './components/Instagram';
+import CTA from './components/CTA';
 
 function Landing() {
   return (
@@ -19,6 +20,7 @@ function Landing() {
       <HowItWorks />
       <EventsHighlight />
       <Instagram />
+      <CTA />
     </div>
   );
 }

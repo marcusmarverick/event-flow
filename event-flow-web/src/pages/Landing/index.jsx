@@ -6,6 +6,7 @@ import UserTypes from './components/UserTypes';
 import Features from './components/Features';
 import HowItWorks from './components/HowItWorks';
 import EventsHighlight from './components/EventsHighlight';
+import Instagram from './components/Instagram';
 
 function Landing() {
   return (
@@ -17,6 +18,7 @@ function Landing() {
       <Features />
       <HowItWorks />
       <EventsHighlight />
+      <Instagram />
     </div>
   );
 }

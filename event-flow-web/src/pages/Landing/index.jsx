@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import UserTypes from './components/UserTypes';
+import Features from './components/Features';
 
 function Landing() {
   return (
@@ -11,6 +12,7 @@ function Landing() {
       <Hero />
       <Marquee/>
       <UserTypes/>
+      <Features/>
     </div>
   );
 }

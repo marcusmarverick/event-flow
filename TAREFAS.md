@@ -63,11 +63,11 @@
   - [✅] Enviar para API
   - [✅] Feedback de sucesso/erro
 
-- [ ] **RF03-FE:** Criar página de Edição de Perfil
-  - [ ] Carregar dados atuais do participante
-  - [ ] Formulário editável (Nome, E-mail)
-  - [ ] Botão de salvar com feedback
-  - [ ] Tratamento de erros
+- [🟨] **RF03-FE:** Criar página de Edição de Perfil
+  - [🟨] Carregar dados atuais do participante (mock até login real ser integrado)
+  - [✅] Formulário editável (Nome, E-mail)
+  - [✅] Botão de salvar com feedback
+  - [✅] Tratamento de erros
 
 - [ ] **RF04-FE:** Criar página de Meus Eventos (Participante)
   - [ ] Listar eventos inscritos
@@ -225,27 +225,73 @@
 
 ## 🎨 Layout & UX
 
-- [ ] Barra de navegação com menu
-  - [ ] Links distintos para Participante/Organizador
-  - [ ] Link para Perfil
-  - [ ] Botão de Logout
+### Landing Page
+
+- [✅] **Landing-FE:** Criar página inicial (Landing Page)
+  - [✅] Navbar com logo, links de navegação e botões de Login/Cadastro
+  - [✅] Seção Hero com carrossel de 3 slides e CTAs
+  - [✅] Seção Marquee (faixa animada com categorias de eventos)
+  - [✅] Seção UserTypes (cards para Participante e Organizador)
+  - [✅] Seção Features (diferenciais da plataforma)
+  - [✅] Seção HowItWorks (passo a passo de uso)
+  - [✅] Seção EventsHighlight (12 eventos em destaque — mockados, pendente seeder do Ian)
+  - [✅] Seção Instagram (feed decorativo)
+  - [✅] Seção CTA final com chamada para cadastro
+  - [✅] Footer com links e redes sociais
+  - [✅] Favicon personalizado (calendário teal + curvas amber)
+  - [✅] `index.html` com lang pt-BR, theme-color e meta descrição
+  - [✅] `manifest.json` atualizado com nome e ícones do EventFlow
+  - [✅] CSS Modules, imagens locais em `src/assets/images/landing/`
+  - [✅] Mergeada via PR #7
+
+### Página de Perfil
+
+- [🟨] **Perfil-FE:** Criar página de Perfil do Usuário
+  - [✅] Navbar sticky com logo, links, avatar, nome e botão de logout
+  - [✅] Banner CTA com carrossel automático das imagens da Hero (hero1/hero2/hero3)
+  - [✅] Banner do perfil com glow teal/amber e grid decorativo
+  - [✅] Avatar com anel animado + botão de trocar foto (upload local)
+  - [✅] Preview dinâmica: nome, ocupação, localização atualizam em tempo real
+  - [✅] Badge de tipo (Participante teal / Organizador amber)
+  - [✅] Stats: total de eventos, finalizados, próximos
+  - [✅] Seção Informações Básicas (Nome, E-mail, Ocupação, CPF somente leitura, Tipo)
+  - [✅] Seção Sobre Mim (Bio com contador de caracteres)
+  - [✅] Seção Contato e Localização (Telefone, Cidade, Estado)
+  - [✅] Seção Redes Sociais (LinkedIn, Instagram)
+  - [✅] Botão Salvar com spinner de loading e feedback de sucesso/erro
+  - [✅] Integração com API: PUT `/participants/:id` e PUT `/organizers/:id`
+  - [🟨] Seção Participações Recentes (mockada — integrar com RF04-BE)
+  - [🟨] Dados extras (bio, ocupação, telefone, redes) salvos localmente — aguardando campos no backend
+  - [🟨] Mock de usuário ativo — remover quando login real estiver integrado
+
+### Geral
+
+- [🟨] Barra de navegação com menu
+  - [✅] Implementada na página de Perfil
+  - [✅] Links distintos para Participante/Organizador
+  - [✅] Avatar + nome do usuário
+  - [✅] Botão de Logout
+  - [ ] Implementar nas demais páginas (Meus Eventos, Criar Evento, etc.)
 
 - [ ] Página inicial/dashboard
   - [ ] Diferentes views para Participante e Organizador
 
 - [ ] Responsividade
-  - [ ] Testes em mobile, tablet, desktop
+  - [✅] Landing Page responsiva
+  - [✅] Página de Perfil responsiva (mobile/tablet/desktop)
+  - [ ] Testes nas demais páginas
 
-- [ ] Feedback visual
-  - [ ] Loading spinners
-  - [ ] Toast/alert mensagens
-  - [ ] Confirmação de ações destrutivas
+- [🟨] Feedback visual
+  - [✅] Loading spinners (Perfil, Login, Cadastro)
+  - [✅] Mensagens de sucesso/erro (Perfil, Login, Cadastro)
+  - [ ] Toast/alert global reutilizável
+  - [ ] Confirmação de ações destrutivas (cancelar inscrição, deletar evento)
 
 ---
 
 ## 📚 Documentação
 
-- [ ] [ ] Documentação da API (Swagger/OpenAPI)
+- [ ] Documentação da API (Swagger/OpenAPI)
 - [ ] README do projeto
 - [ ] Instruções de setup e deploy
 
@@ -253,14 +299,16 @@
 
 ## 🚀 Status Geral
 
-| Módulo         | Backend | Frontend | Status       |
-| -------------- | :-----: | :------: | ------------ |
-| Autenticação   |   ✅    |    ⬜    | BE concluído |
-| Participante   |   🟨    |    ⬜    | Em progresso |
-| Organizador    |   🟨    |    ⬜    | Em progresso |
-| Eventos        |   ⬜    |    ⬜    | A fazer      |
-| Banco de Dados |   ✅    |    -     | Concluído    |
-| Design/UX      |    -    |    🟨    | Em progresso |
+| Módulo          | Backend | Frontend | Status            |
+| --------------- | :-----: | :------: | ----------------- |
+| Autenticação    |   ✅    |    🟨    | FE em progresso   |
+| Participante    |   🟨    |    🟨    | Em progresso      |
+| Organizador     |   🟨    |    ⬜    | BE quase completo |
+| Eventos         |   ⬜    |    ⬜    | A fazer           |
+| Banco de Dados  |   ✅    |    -     | Concluído         |
+| Landing Page    |    -    |    ✅    | Concluída         |
+| Perfil          |    -    |    🟨    | Em progresso      |
+| Design/UX Geral |    -    |    🟨    | Em progresso      |
 
 ---
 

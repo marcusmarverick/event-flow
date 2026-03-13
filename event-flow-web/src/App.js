@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Landing from './pages/Landing';
 import Profile from './pages/Profile';
+import Events from './pages/Events';
 import CreateEvent from './pages/CreateEvent';
 import MyEvents from './pages/MyEvents';
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/participant/profile" element={<Profile />} />
+        <Route path="/events" element={<Events />} />
         <Route path="/events/create" element={<CreateEvent />} />
         <Route path="/organizer/events" element={<MyEvents />} />
         <Route path="*" element={<Navigate to="/" replace />} />

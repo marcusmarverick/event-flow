@@ -50,3 +50,21 @@ export async function updateEvent(id, formData) {
 export async function deleteEvent(id) {
   await api.delete(`/events/${id}`);
 }
+
+/**
+ * GET /participants/:id/events (authenticated)
+ * @param {string} userId
+ * @returns {{ events: Array }}
+ */
+export async function listMyRegistrations(userId) {
+  const response = await api.get(`/participants/${userId}/events`);
+  return response.data;
+}
+
+/**
+ * DELETE /registrations/:id (authenticated)
+ * @param {string} id
+ */
+export async function cancelRegistration(id) {
+  await api.delete(`/registrations/${id}`);
+}

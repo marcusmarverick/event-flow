@@ -128,25 +128,25 @@
   - [✅] Enviar para API
   - [✅] Feedback de sucesso/erro
 
-- [ ] **RF07-FE:** Criar página de Criar Evento
-  - [ ] Formulário com: Nome, Data, Hora, Localização, Capacidade
-  - [ ] Validações de entrada
-  - [ ] Picker de data/hora
-  - [ ] Botão de criar com feedback
-  - [ ] Redirecionamento após sucesso
+- [✅] **RF07-FE:** Criar página de Criar Evento
+  - [✅] Formulário com: Nome, Data, Hora, Localização, Capacidade
+  - [✅] Validações de entrada
+  - [✅] Picker de data/hora
+  - [✅] Botão de criar com feedback
+  - [✅] Redirecionamento após sucesso
 
-- [ ] **RF08-FE:** Criar página de Editar Evento
-  - [ ] Carregar dados do evento
-  - [ ] Formulário editável
-  - [ ] Validações
-  - [ ] Botão de salvar com feedback
-  - [ ] Tratamento de erros (RN04)
+- [✅] **RF08-FE:** Criar página de Editar Evento
+  - [✅] Carregar dados do evento
+  - [✅] Formulário editável
+  - [✅] Validações
+  - [✅] Botão de salvar com feedback
+  - [✅] Tratamento de erros (RN04)
 
-- [ ] **RF09-FE:** Implementar exclusão de evento
-  - [ ] Botão de deletar com confirmação
-  - [ ] Mostrar aviso se houver inscritos
-  - [ ] Requisição de DELETE para API
-  - [ ] Redirecionar se sucesso
+- [✅] **RF09-FE:** Implementar exclusão de evento
+  - [✅] Botão de deletar com confirmação
+  - [✅] Mostrar aviso se houver inscritos
+  - [✅] Requisição de DELETE para API
+  - [✅] Redirecionar se sucesso
 
 - [ ] **RF10-FE:** Criar página de Participantes do Evento
   - [ ] Listar inscritos no evento

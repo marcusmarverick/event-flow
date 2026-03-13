@@ -186,6 +186,10 @@ function Register() {
       setError('CPF é obrigatório para participantes.');
       return;
     }
+    if (form.password.length < 8) {
+      setError('A senha deve ter no mínimo 8 caracteres.');
+      return;
+    }
 
     setLoading(true);
     setError('');

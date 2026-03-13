@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import styles from './AppLayout.module.css';
@@ -19,6 +18,15 @@ function LogoIcon() {
 
 const NAV_PARTICIPANT = [
   {
+    to: '/participant/profile',
+    label: 'Meu perfil',
+    icon: (
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      </svg>
+    ),
+  },
+  {
     to: '/events',
     label: 'Explorar eventos',
     icon: (
@@ -36,8 +44,11 @@ const NAV_PARTICIPANT = [
       </svg>
     ),
   },
+];
+
+const NAV_ORGANIZER = [
   {
-    to: '/participant/profile',
+    to: '/organizer/profile',
     label: 'Meu perfil',
     icon: (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -45,9 +56,6 @@ const NAV_PARTICIPANT = [
       </svg>
     ),
   },
-];
-
-const NAV_ORGANIZER = [
   {
     to: '/events',
     label: 'Explorar eventos',
@@ -75,22 +83,12 @@ const NAV_ORGANIZER = [
       </svg>
     ),
   },
-  {
-    to: '/organizer/profile',
-    label: 'Meu perfil',
-    icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-      </svg>
-    ),
-  },
 ];
 
 export default function AppLayout({ children, onSearch, searchValue = '', searchPlaceholder = 'Buscar eventos...' }) {
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
 
   const isOrganizer = user?.type === 'organizer';
   const navItems = isOrganizer ? NAV_ORGANIZER : NAV_PARTICIPANT;
@@ -103,52 +101,30 @@ export default function AppLayout({ children, onSearch, searchValue = '', search
 
   return (
     <div className={styles.root}>
-      {/* Fundo */}
       <div className={styles.dots} />
       <div className={styles.orbs} />
 
-      {/* Wrapper glassmorphism geral */}
-      <div className={`${styles.shell} ${collapsed ? styles.shellCollapsed : ''}`}>
+      <div className={styles.shell}>
 
         {/* ── Sidebar ── */}
-        <aside className={`${styles.sidebar} ${collapsed ? styles.sidebarCollapsed : ''}`}>
-
-          {/* Logo */}
+        <aside className={styles.sidebar}>
           <div className={styles.sidebarLogo}>
             <Link to="/" className={styles.logoLink}>
               <LogoIcon />
-              {!collapsed && (
-                <span className={styles.logoText}>
-                  Event<span className={styles.logoAccent}>Flow</span>
-                </span>
-              )}
+              <span className={styles.logoText}>
+                Event<span className={styles.logoAccent}>Flow</span>
+              </span>
             </Link>
-            <button
-              className={styles.collapseBtn}
-              onClick={() => setCollapsed(p => !p)}
-              title={collapsed ? 'Expandir' : 'Recolher'}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                {collapsed
-                  ? <><polyline points="9 18 15 12 9 6" /></>
-                  : <><polyline points="15 18 9 12 15 6" /></>
-                }
-              </svg>
-            </button>
           </div>
 
-          {/* Tipo de conta */}
-          {!collapsed && (
-            <div className={styles.sidebarType}>
-              <span className={`${styles.typePill} ${isOrganizer ? styles.typeOrg : styles.typePart}`}>
-                {isOrganizer ? '🎤 Organizador' : '🎟️ Participante'}
-              </span>
-            </div>
-          )}
+          <div className={styles.sidebarType}>
+            <span className={`${styles.typePill} ${isOrganizer ? styles.typeOrg : styles.typePart}`}>
+              {isOrganizer ? '🎤 Organizador' : '🎟️ Participante'}
+            </span>
+          </div>
 
-          {/* Nav */}
           <nav className={styles.sidebarNav}>
-            {!collapsed && <span className={styles.navSection}>MENU</span>}
+            <span className={styles.navSection}>MENU</span>
             {navItems.map(item => {
               const active = location.pathname === item.to;
               return (
@@ -156,26 +132,22 @@ export default function AppLayout({ children, onSearch, searchValue = '', search
                   key={item.to}
                   to={item.to}
                   className={`${styles.navItem} ${active ? styles.navItemActive : ''}`}
-                  title={collapsed ? item.label : undefined}
                 >
                   <span className={styles.navIcon}>{item.icon}</span>
-                  {!collapsed && <span className={styles.navLabel}>{item.label}</span>}
-                  {active && !collapsed && <span className={styles.navActiveDot} />}
+                  <span className={styles.navLabel}>{item.label}</span>
+                  {active && <span className={styles.navActiveDot} />}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Footer da sidebar */}
           <div className={styles.sidebarFooter}>
             <div className={styles.sidebarUser}>
               <div className={styles.sidebarAvatar}>{initials}</div>
-              {!collapsed && (
-                <div className={styles.sidebarUserInfo}>
-                  <span className={styles.sidebarUserName}>{user?.name?.split(' ')[0]}</span>
-                  <span className={styles.sidebarUserEmail}>{user?.email}</span>
-                </div>
-              )}
+              <div className={styles.sidebarUserInfo}>
+                <span className={styles.sidebarUserName}>{user?.name?.split(' ')[0]}</span>
+                <span className={styles.sidebarUserEmail}>{user?.email}</span>
+              </div>
             </div>
             <button className={styles.logoutBtn} onClick={handleLogout} title="Sair">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -189,8 +161,6 @@ export default function AppLayout({ children, onSearch, searchValue = '', search
 
         {/* ── Main ── */}
         <div className={styles.main}>
-
-          {/* Topbar */}
           <header className={styles.topbar}>
             <div className={styles.topbarSearch}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -216,7 +186,6 @@ export default function AppLayout({ children, onSearch, searchValue = '', search
             </div>
           </header>
 
-          {/* Conteúdo */}
           <div className={styles.content}>
             {children}
           </div>

@@ -1,12 +1,16 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../../components/AppLayout';
 import { listEvents } from '../../services/eventService';
 import styles from './Events.module.css';
 
-const API_URL = process.env.REACT_APP_API_URL || '';
+import hero1 from '../../assets/images/landing/hero1.jpg';
+import hero2 from '../../assets/images/landing/hero2.jpg';
+import hero3 from '../../assets/images/landing/hero3.jpg';
 
-/* ── helpers ── */
+const API_URL = process.env.REACT_APP_API_URL || '';
+const HERO_IMAGES = [hero1, hero2, hero3];
+
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString('pt-BR', {
     day: 'numeric', month: 'short', year: 'numeric',
@@ -21,9 +25,9 @@ function formatTime(iso) {
 
 function getStatus(iso) {
   const diff = (new Date(iso) - new Date()) / (1000 * 60 * 60);
-  if (diff < 0)  return { label: 'Finalizado', key: 'done' };
-  if (diff <= 24) return { label: 'Ao vivo',   key: 'live' };
-  return           { label: 'Próximo',          key: 'upcoming' };
+  if (diff < 0)   return { label: 'Finalizado', key: 'done' };
+  if (diff <= 24) return { label: 'Ao vivo',    key: 'live' };
+  return           { label: 'Próximo',           key: 'upcoming' };
 }
 
 /* ── Card ── */
@@ -73,16 +77,13 @@ function EventCard({ event, onClick }) {
             </svg>
             {status.key === 'done' ? 'Encerrado' : `${event.capacity} vagas`}
           </span>
-          <button className={styles.cardBtn}>
-            Ver detalhes →
-          </button>
+          <button className={styles.cardBtn}>Ver detalhes →</button>
         </div>
       </div>
     </div>
   );
 }
 
-/* ── Filtros ── */
 const FILTERS = [
   { key: 'all',      label: 'Todos' },
   { key: 'upcoming', label: 'Próximos' },
@@ -93,11 +94,20 @@ const FILTERS = [
 /* ── Página ── */
 export default function Events() {
   const navigate = useNavigate();
-  const [events, setEvents]   = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError]     = useState(null);
-  const [search, setSearch]   = useState('');
-  const [filter, setFilter]   = useState('all');
+  const [events, setEvents]     = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [error, setError]       = useState(null);
+  const [search, setSearch]     = useState('');
+  const [filter, setFilter]     = useState('all');
+  const [heroIdx, setHeroIdx]   = useState(0);
+  const [heroPaused, setHeroPaused] = useState(false);
+
+  /* carrossel hero */
+  useEffect(() => {
+    if (heroPaused) return;
+    const t = setInterval(() => setHeroIdx(i => (i + 1) % HERO_IMAGES.length), 4000);
+    return () => clearInterval(t);
+  }, [heroPaused]);
 
   useEffect(() => {
     listEvents()
@@ -128,17 +138,74 @@ export default function Events() {
       searchValue={search}
       searchPlaceholder="Buscar por nome ou cidade..."
     >
-      {/* Header */}
-      <div className={styles.header}>
-        <div>
-          <h1 className={styles.title}>Explorar eventos</h1>
-          <p className={styles.subtitle}>
-            {loading ? 'Carregando...' : `${filtered.length} evento${filtered.length !== 1 ? 's' : ''} encontrado${filtered.length !== 1 ? 's' : ''}`}
+      {/* ── Hero ── */}
+      <div className={styles.hero}>
+        {/* Orbs decorativos */}
+        <div className={styles.heroOrb1} />
+        <div className={styles.heroOrb2} />
+
+        {/* Conteúdo esquerdo */}
+        <div className={styles.heroContent}>
+          <span className={styles.heroEyebrow}>
+            <span className={styles.heroLine} />
+            Plataforma de eventos
+          </span>
+          <h1 className={styles.heroTitle}>
+            Descubra experiências<br />
+            <span className={styles.heroAccent}>que inspiram</span>
+          </h1>
+          <p className={styles.heroSub}>
+            Explore eventos de tecnologia, design, negócios e muito mais.
           </p>
+
+          {/* Stats */}
+          <div className={styles.heroStats}>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatNum}>{counts.all}</span>
+              <span className={styles.heroStatLabel}>eventos</span>
+            </div>
+            <div className={styles.heroStatDivider} />
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatNum}>{counts.upcoming}</span>
+              <span className={styles.heroStatLabel}>próximos</span>
+            </div>
+            <div className={styles.heroStatDivider} />
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatNum}>{counts.live}</span>
+              <span className={styles.heroStatLabel}>ao vivo</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Imagem carrossel direita */}
+        <div
+          className={styles.heroImgWrap}
+          onMouseEnter={() => setHeroPaused(true)}
+          onMouseLeave={() => setHeroPaused(false)}
+        >
+          {HERO_IMAGES.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt={`hero ${i + 1}`}
+              className={`${styles.heroImg} ${i === heroIdx ? styles.heroImgActive : ''}`}
+            />
+          ))}
+          <div className={styles.heroImgOverlay} />
+          {/* Dots */}
+          <div className={styles.heroDots}>
+            {HERO_IMAGES.map((_, i) => (
+              <button
+                key={i}
+                className={`${styles.heroDot} ${i === heroIdx ? styles.heroDotActive : ''}`}
+                onClick={() => setHeroIdx(i)}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Filtros */}
+      {/* ── Filtros ── */}
       <div className={styles.filters}>
         {FILTERS.map(f => (
           <button
@@ -150,9 +217,12 @@ export default function Events() {
             <span className={styles.filterCount}>{counts[f.key]}</span>
           </button>
         ))}
+        <span className={styles.filterResult}>
+          {!loading && `${filtered.length} resultado${filtered.length !== 1 ? 's' : ''}`}
+        </span>
       </div>
 
-      {/* Estados */}
+      {/* ── Estados ── */}
       {loading && (
         <div className={styles.center}>
           <div className={styles.spinner} />
@@ -162,20 +232,20 @@ export default function Events() {
 
       {error && !loading && (
         <div className={styles.center}>
-          <span className={styles.errorIcon}>⚠️</span>
+          <span className={styles.stateIcon}>⚠️</span>
           <p>{error}</p>
         </div>
       )}
 
       {!loading && !error && filtered.length === 0 && (
         <div className={styles.center}>
-          <span className={styles.emptyIcon}>🔍</span>
+          <span className={styles.stateIcon}>🔍</span>
           <p className={styles.emptyTitle}>Nenhum evento encontrado</p>
           <p className={styles.emptyDesc}>Tente outro termo ou filtro</p>
         </div>
       )}
 
-      {/* Grid */}
+      {/* ── Grid ── */}
       {!loading && !error && filtered.length > 0 && (
         <div className={styles.grid}>
           {filtered.map(ev => (

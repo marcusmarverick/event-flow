@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Landing from './pages/Landing';
 import Profile from './pages/Profile';
+import CreateEvent from './pages/CreateEvent';
 
 function App() {
   return (
@@ -11,8 +12,9 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/participant/profile" element={<Profile />} />
+        <Route path="/events/create" element={<CreateEvent />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

@@ -28,6 +28,7 @@ export default class UpdateEventUseCase {
       dateTime: dto.dateTime,
       location: dto.location,
       capacity: dto.capacity,
+      image: dto.image,
     })
   }
 }

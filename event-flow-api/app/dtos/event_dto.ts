@@ -5,6 +5,7 @@ export interface CreateEventDto {
   dateTime: Date
   location: string
   capacity: number
+  image?: string | null
 }
 
 export interface UpdateEventDto {
@@ -15,4 +16,5 @@ export interface UpdateEventDto {
   dateTime?: Date
   location?: string
   capacity?: number
+  image?: string | null
 }

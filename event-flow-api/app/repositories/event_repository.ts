@@ -11,6 +11,7 @@ export default class EventRepository {
       dateTime: DateTime.fromJSDate(dto.dateTime),
       location: dto.location,
       capacity: dto.capacity,
+      image: dto.image ?? null,
     })
   }
 
@@ -34,6 +35,7 @@ export default class EventRepository {
       dateTime?: Date
       location?: string
       capacity?: number
+      image?: string | null
     }
   ): Promise<Event> {
     const merged: Record<string, any> = {}
@@ -42,6 +44,7 @@ export default class EventRepository {
     if (data.dateTime !== undefined) merged.dateTime = DateTime.fromJSDate(data.dateTime)
     if (data.location !== undefined) merged.location = data.location
     if (data.capacity !== undefined) merged.capacity = data.capacity
+    if (data.image !== undefined) merged.image = data.image
 
     event.merge(merged)
     await event.save()

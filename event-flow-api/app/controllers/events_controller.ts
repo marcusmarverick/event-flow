@@ -1,5 +1,7 @@
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
+import { cuid } from '@adonisjs/core/helpers'
+import app from '@adonisjs/core/services/app'
 import CreateEventUseCase from '#use_cases/event/create_event_use_case'
 import UpdateEventUseCase from '#use_cases/event/update_event_use_case'
 import DeleteEventUseCase from '#use_cases/event/delete_event_use_case'
@@ -25,7 +27,16 @@ export default class EventsController {
   async store({ auth, request, response }: HttpContext) {
     const userId = auth.user!.id
     const data = await request.validateUsing(createEventValidator)
-    const event = await this.createEventUseCase.execute({ userId, ...data })
+
+    let imagePath: string | null = null
+    const image = request.file('image', { size: '5mb', extnames: ['jpg', 'jpeg', 'png', 'webp'] })
+    if (image) {
+      const fileName = `${cuid()}.${image.extname}`
+      await image.move(app.publicPath('uploads/events'), { name: fileName })
+      imagePath = `/uploads/events/${fileName}`
+    }
+
+    const event = await this.createEventUseCase.execute({ userId, ...data, image: imagePath })
     return response.created({ event })
   }
 
@@ -33,7 +44,16 @@ export default class EventsController {
     const userId = auth.user!.id
     const eventId = request.param('id')
     const data = await request.validateUsing(updateEventValidator)
-    const event = await this.updateEventUseCase.execute({ userId, eventId, ...data })
+
+    let imagePath: string | undefined
+    const image = request.file('image', { size: '5mb', extnames: ['jpg', 'jpeg', 'png', 'webp'] })
+    if (image) {
+      const fileName = `${cuid()}.${image.extname}`
+      await image.move(app.publicPath('uploads/events'), { name: fileName })
+      imagePath = `/uploads/events/${fileName}`
+    }
+
+    const event = await this.updateEventUseCase.execute({ userId, eventId, ...data, ...(imagePath !== undefined && { image: imagePath }) })
     return response.ok({ event })
   }
 

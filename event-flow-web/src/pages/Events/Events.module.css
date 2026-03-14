@@ -113,14 +113,26 @@
 /* Imagem direita */
 .heroImgWrap {
   position: relative;
-  width: 320px;
-  max-width: 320px;
+  width: 520px;
+  max-width: 520px;
   height: 160px;
   border-radius: 12px;
   overflow: hidden;
   flex-shrink: 0;
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   border: 1px solid rgba(20,184,166,0.2);
+}
+
+@media (max-width: 1415px) {
+  .heroImgWrap { width: 420px; max-width: 420px; }
+}
+
+@media (max-width: 965px) {
+  .heroImgWrap { width: 320px; max-width: 320px; }
+}
+
+@media (max-width: 900px) {
+  .heroImgWrap { display: none; }
 }
 
 .heroImg {

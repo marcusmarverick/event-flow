@@ -117,7 +117,7 @@ export default function Profile() {
         </Link>
 
         <ul className={styles.navLinks}>
-          <li><Link to="/" className={styles.navLink}>Explorar eventos</Link></li>
+          <li><Link to="/events" className={styles.navLink}>Explorar eventos</Link></li>
           {isOrganizer && <li><Link to="/organizer/events" className={styles.navLink}>Meus eventos</Link></li>}
           {!isOrganizer && <li><Link to="/participant/events" className={styles.navLink}>Minhas inscrições</Link></li>}
           <li><Link to="/participant/profile" className={`${styles.navLink} ${styles.navLinkActive}`}>Perfil</Link></li>

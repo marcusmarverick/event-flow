@@ -10,6 +10,7 @@ import MyEvents from './pages/MyEvents';
 import HowItWorks from './pages/HowItWorks';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import EventDetails from './pages/EventDetails';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/events/create" element={<CreateEvent />} />
         <Route path="/organizer/events" element={<MyEvents />} />
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/events/:id" element={<EventDetails />} />
       </Routes>
     </BrowserRouter>
   );

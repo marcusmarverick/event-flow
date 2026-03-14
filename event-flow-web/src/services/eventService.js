@@ -10,6 +10,18 @@ export async function listEvents() {
 }
 
 /**
+ * GET /events — busca um evento pelo id
+ * @param {string} id
+ * @returns {{ event: object }}
+ */
+export async function getEvent(id) {
+  const response = await api.get('/events');
+  const event = response.data.events.find(ev => String(ev.id) === String(id));
+  if (!event) throw new Error('Evento não encontrado');
+  return { event };
+}
+
+/**
  * POST /events (multipart/form-data)
  * @param {FormData} formData
  * @returns {{ event: object }}

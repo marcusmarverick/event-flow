@@ -3,23 +3,23 @@ import styles from './InfoPage.module.css';
 import hero2 from '../../assets/images/landing/hero2.jpg';
 
 const TEAM = [
-  { name: 'Érika Laiane',  initials: 'EL', color: 'amber' },
-  { name: 'Felipe Soares', initials: 'FS', color: 'teal'  },
-  { name: 'Ian Braga',     initials: 'IB', color: 'amber'  },
-  { name: 'João Pedro',    initials: 'JP', color: 'teal' },
+  { name: 'Érika Laiane',    initials: 'EL', color: 'amber' },
+  { name: 'Felipe Soares',   initials: 'FS', color: 'teal'  },
+  { name: 'Ian Braga',       initials: 'IB', color: 'amber' },
+  { name: 'João Pedro',      initials: 'JP', color: 'teal'  },
   { name: 'Marcus Vinícius', initials: 'MV', color: 'amber' },
 ];
 
 const VALUES = [
-  { icon: '⚡', title: 'Simplicidade', desc: 'Interfaces limpas que qualquer pessoa consegue usar sem precisar de manual.' },
-  { icon: '🔒', title: 'Segurança',    desc: 'Autenticação robusta e proteção de dados em todas as operações.' },
+  { icon: '⚡', title: 'Simplicidade',    desc: 'Interfaces limpas que qualquer pessoa consegue usar sem precisar de manual.' },
+  { icon: '🔒', title: 'Segurança',       desc: 'Autenticação robusta e proteção de dados em todas as operações.' },
   { icon: '🎯', title: 'Foco no usuário', desc: 'Cada decisão de design foi tomada pensando em quem vai usar.' },
-  { icon: '🚀', title: 'Performance',  desc: 'Código limpo e otimizado para uma experiência rápida e fluida.' },
+  { icon: '🚀', title: 'Performance',     desc: 'Código limpo e otimizado para uma experiência rápida e fluida.' },
 ];
 
 export default function About() {
   return (
-    <AppLayout searchPlaceholder="Buscar eventos...">
+    <AppLayout searchPlaceholder="Buscar eventos..." fixedContent>
       <div className={styles.hero}>
         <img src={hero2} alt="Sobre nós" className={styles.heroImg} />
         <div className={styles.heroOverlay} />
@@ -38,7 +38,6 @@ export default function About() {
         </div>
       </div>
 
-      {/* Time */}
       <div className={styles.sectionTitle}>
         <h2>Quem fez isso acontecer</h2>
         <p>Cinco estudantes apaixonados por tecnologia</p>
@@ -55,7 +54,6 @@ export default function About() {
         ))}
       </div>
 
-      {/* Valores */}
       <div className={styles.sectionTitle} style={{ marginTop: '40px' }}>
         <h2>Nossos valores</h2>
         <p>Princípios que guiaram cada linha de código</p>

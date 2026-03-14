@@ -50,7 +50,7 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <AppLayout searchPlaceholder="Buscar eventos...">
+    <AppLayout searchPlaceholder="Buscar eventos..." fixedContent>
       <div className={styles.hero}>
         <img src={hero1} alt="Como funciona" className={styles.heroImg} />
         <div className={styles.heroOverlay} />

@@ -39,7 +39,7 @@ const CONTACTS = [
 
 export default function Contact() {
   return (
-    <AppLayout searchPlaceholder="Buscar eventos...">
+    <AppLayout searchPlaceholder="Buscar eventos..." fixedContent>
       <div className={styles.hero}>
         <img src={hero3} alt="Contato" className={styles.heroImg} />
         <div className={styles.heroOverlay} />

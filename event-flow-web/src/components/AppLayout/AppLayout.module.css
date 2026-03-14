@@ -1,15 +1,15 @@
 :root {
-  --navy:        #0f1b35;
-  --navy-mid:    #1a2a4a;
-  --navy-light:  #243557;
-  --teal:        #14b8a6;
-  --teal-light:  #2dd4bf;
-  --amber:       #f59e0b;
-  --text-muted:  #94a3b8;
-  --white:       #ffffff;
-  --sidebar-w:   240px;
-  --topbar-h:    60px;
-  --pad:         20px;
+  --navy:       #0f1b35;
+  --navy-mid:   #1a2a4a;
+  --navy-light: #243557;
+  --teal:       #14b8a6;
+  --teal-light: #2dd4bf;
+  --amber:      #f59e0b;
+  --text-muted: #94a3b8;
+  --white:      #ffffff;
+  --sidebar-w:  240px;
+  --topbar-h:   60px;
+  --pad:        20px;
 }
 
 /* ── Fundo ── */
@@ -19,7 +19,6 @@
   font-family: 'Trebuchet MS', 'Lucida Grande', sans-serif;
 }
 
-/* Garante que o fundo navy cobre tudo */
 .root::before {
   content: '';
   position: fixed;
@@ -47,7 +46,9 @@
   z-index: 0;
 }
 
-/* ── Sidebar — fixed, independente ── */
+/* ══════════════════════════════════
+   SIDEBAR — desktop fixed
+══════════════════════════════════ */
 .sidebar {
   position: fixed;
   top: var(--pad);
@@ -66,7 +67,44 @@
   z-index: 100;
 }
 
-/* ── Topbar — fixed, independente ── */
+/* ══════════════════════════════════
+   SIDEBAR MOBILE — drawer
+══════════════════════════════════ */
+.sidebarMobile {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  flex-direction: column;
+  background: rgba(10, 20, 40, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(20,184,166,0.18);
+  box-shadow: 4px 0 32px rgba(0,0,0,0.5);
+  z-index: 200;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.sidebarMobileOpen {
+  transform: translateX(0);
+}
+
+/* Overlay escuro atrás do drawer */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 199;
+}
+
+/* ══════════════════════════════════
+   TOPBAR — fixed
+══════════════════════════════════ */
 .topbar {
   position: fixed;
   top: var(--pad);
@@ -87,11 +125,30 @@
   z-index: 100;
 }
 
-/* ── Conteúdo rolável ── */
+/* Hamburguer — escondido no desktop */
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  color: var(--white);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.hamburger:hover { background: rgba(20,184,166,0.15); }
+
+/* ══════════════════════════════════
+   CONTEÚDO
+══════════════════════════════════ */
 .content {
   position: relative;
   z-index: 1;
-  /* empurra para baixo da topbar e para direita da sidebar */
   margin-left: calc(50% - 42.5vw + var(--sidebar-w) + 12px);
   margin-right: calc(50% - 42.5vw);
   margin-top: calc(var(--pad) + var(--topbar-h) + 12px);
@@ -107,12 +164,36 @@
   animation: fadeIn 0.4s ease both;
 }
 
+.contentFixed {
+  position: fixed;
+  z-index: 1;
+  left: calc(50% - 42.5vw + var(--sidebar-w) + 12px);
+  right: calc(50% - 42.5vw);
+  top: calc(var(--pad) + var(--topbar-h) + 12px);
+  bottom: var(--pad);
+  padding: 24px 28px;
+  overflow-y: auto;
+  background: rgba(15, 28, 55, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(20,184,166,0.18);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  animation: fadeIn 0.4s ease both;
+}
+
+.contentFixed::-webkit-scrollbar { width: 4px; }
+.contentFixed::-webkit-scrollbar-track { background: transparent; }
+.contentFixed::-webkit-scrollbar-thumb { background: rgba(20,184,166,0.2); border-radius: 4px; }
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Sidebar interna ── */
+/* ══════════════════════════════════
+   SIDEBAR INTERNA
+══════════════════════════════════ */
 .sidebarLogo {
   display: flex;
   align-items: center;
@@ -128,8 +209,7 @@
 }
 
 .logoIcon { width: 36px; height: 36px; flex-shrink: 0; }
-
-.logoText { font-size: 19px; font-weight: 800; color: var(--white); }
+.logoText  { font-size: 19px; font-weight: 800; color: var(--white); }
 .logoAccent { color: var(--teal); }
 
 .sidebarType {
@@ -199,7 +279,7 @@
   background: rgba(20,184,166,0.1) !important;
 }
 
-.navIcon { flex-shrink: 0; display: flex; align-items: center; }
+.navIcon  { flex-shrink: 0; display: flex; align-items: center; }
 .navLabel { flex: 1; }
 
 .navActiveDot {
@@ -298,7 +378,9 @@
   padding: 0 !important;
 }
 
-/* ── Topbar interna ── */
+/* ══════════════════════════════════
+   TOPBAR INTERNA
+══════════════════════════════════ */
 .topbarSearch {
   display: flex;
   align-items: center;
@@ -376,16 +458,51 @@
   padding: 0 !important;
 }
 
-/* Responsivo */
+/* ══════════════════════════════════
+   RESPONSIVO — tablet/mobile
+══════════════════════════════════ */
 @media (max-width: 1024px) {
-  .sidebar  { left: 12px; }
-  .topbar   { left: calc(12px + var(--sidebar-w) + 12px); right: 12px; }
-  .content  { margin-left: calc(12px + var(--sidebar-w) + 12px); margin-right: 12px; }
+  .sidebar { left: 12px; }
+  .topbar  { left: calc(12px + var(--sidebar-w) + 12px); right: 12px; }
+  .content {
+    margin-left: calc(12px + var(--sidebar-w) + 12px);
+    margin-right: 12px;
+  }
+  .contentFixed {
+    left: calc(12px + var(--sidebar-w) + 12px);
+    right: 12px;
+  }
 }
 
 @media (max-width: 768px) {
-  .sidebar  { left: 0; top: 0; border-radius: 0; height: 100vh; width: 60px; }
-  .topbar   { left: 60px; top: 0; border-radius: 0; right: 0; }
-  .content  { margin-left: 60px; margin-right: 0; margin-top: calc(var(--topbar-h) + 8px); border-radius: 0; }
-  .logoText, .navLabel, .sidebarType, .sidebarUserInfo, .navSection { display: none; }
+  /* Esconde sidebar desktop, mostra drawer + hamburguer */
+  .sidebar       { display: none; }
+  .sidebarMobile { display: flex; }
+  .overlay       { display: block; }
+  .hamburger     { display: flex; }
+
+  /* Topbar ocupa a largura toda */
+  .topbar {
+    left: 12px;
+    right: 12px;
+    top: 12px;
+  }
+
+  /* Conteúdo sem margem da sidebar */
+  .content {
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-top: calc(12px + var(--topbar-h) + 12px);
+  }
+
+  .contentFixed {
+    left: 12px;
+    right: 12px;
+    top: calc(12px + var(--topbar-h) + 12px);
+    bottom: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbarUserInfo { display: none; }
 }

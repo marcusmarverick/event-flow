@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { listEvents } from '../../../../services/eventService';
 import styles from './EventsHighlight.module.css';
+
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -39,8 +40,9 @@ function toCardEvent(apiEvent) {
 }
 
 function Card({ ev }) {
+  const navigate = useNavigate();
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={() => navigate(`/events/${ev.id}`)} style={{ cursor: 'pointer' }}>
       <div className={styles.cardImgWrap}>
         <img src={ev.img} alt={ev.title} className={styles.cardImg} />
         <div className={styles.cardImgOverlay} />

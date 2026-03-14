@@ -77,6 +77,35 @@
 .sectionTitle h2 { font-size: 20px; font-weight: 800; color: #ffffff; margin: 0 0 4px; }
 .sectionTitle p  { font-size: 13px; color: #94a3b8; margin: 0; }
 
+/* ── Badge tipo ── */
+.typeTag {
+  margin-bottom: 20px;
+}
+
+.typeTagPart {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(20,184,166,0.12);
+  color: #2dd4bf;
+  border: 1px solid rgba(20,184,166,0.25);
+}
+
+.typeTagOrg {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(245,158,11,0.12);
+  color: #f59e0b;
+  border: 1px solid rgba(245,158,11,0.25);
+}
+
 /* ── Steps ── */
 .steps {
   display: grid;

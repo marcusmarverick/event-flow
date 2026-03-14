@@ -129,13 +129,13 @@ export default function CreateEvent() {
 
       {/* ── Navbar ── */}
       <nav className={styles.navbar}>
-        <Link to="/" className={styles.navLogo}>
+        <Link to="/Event" className={styles.navLogo}>
           <LogoIcon />
           <span className={styles.navLogoText}>Event<span className={styles.navAccent}>Flow</span></span>
         </Link>
 
         <ul className={styles.navLinks}>
-          <li><Link to="/" className={styles.navLink}>Explorar eventos</Link></li>
+          <li><Link to="/events" className={styles.navLink}>Explorar eventos</Link></li>
           <li><Link to="/events/create" className={`${styles.navLink} ${styles.navLinkActive}`}>Criar evento</Link></li>
           <li><Link to="/organizer/events" className={styles.navLink}>Meus eventos</Link></li>
         </ul>

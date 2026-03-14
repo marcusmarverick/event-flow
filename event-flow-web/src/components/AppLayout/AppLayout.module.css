@@ -47,7 +47,7 @@
 }
 
 /* ══════════════════════════════════
-   SIDEBAR — desktop fixed
+   SIDEBAR — fixed
 ══════════════════════════════════ */
 .sidebar {
   position: fixed;
@@ -89,11 +89,8 @@
   overflow-y: auto;
 }
 
-.sidebarMobileOpen {
-  transform: translateX(0);
-}
+.sidebarMobileOpen { transform: translateX(0); }
 
-/* Overlay escuro atrás do drawer */
 .overlay {
   display: none;
   position: fixed;
@@ -125,7 +122,6 @@
   z-index: 100;
 }
 
-/* Hamburguer — escondido no desktop */
 .hamburger {
   display: none;
   align-items: center;
@@ -144,26 +140,27 @@
 .hamburger:hover { background: rgba(20,184,166,0.15); }
 
 /* ══════════════════════════════════
-   CONTEÚDO
+   CONTEÚDO — fixed, rola internamente
 ══════════════════════════════════ */
 .content {
-  position: relative;
+  position: fixed;
   z-index: 1;
-  margin-left: calc(50% - 42.5vw + var(--sidebar-w) + 12px);
-  margin-right: calc(50% - 42.5vw);
-  margin-top: calc(var(--pad) + var(--topbar-h) + 12px);
+  left: calc(50% - 42.5vw + var(--sidebar-w) + 12px);
+  right: calc(50% - 42.5vw);
+  top: calc(var(--pad) + var(--topbar-h) + 12px);
+  bottom: var(--pad);
   padding: 24px 28px;
-  min-height: calc(100vh - var(--pad) - var(--topbar-h) - 12px - 24px);
+  overflow-y: auto;
   background: rgba(15, 28, 55, 0.55);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(20,184,166,0.18);
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  margin-bottom: var(--pad);
   animation: fadeIn 0.4s ease both;
 }
 
+/* contentFixed é igual ao content agora — mantido por compatibilidade */
 .contentFixed {
   position: fixed;
   z-index: 1;
@@ -182,9 +179,14 @@
   animation: fadeIn 0.4s ease both;
 }
 
+.content::-webkit-scrollbar,
 .contentFixed::-webkit-scrollbar { width: 4px; }
+.content::-webkit-scrollbar-track,
 .contentFixed::-webkit-scrollbar-track { background: transparent; }
+.content::-webkit-scrollbar-thumb,
 .contentFixed::-webkit-scrollbar-thumb { background: rgba(20,184,166,0.2); border-radius: 4px; }
+.content::-webkit-scrollbar-thumb:hover,
+.contentFixed::-webkit-scrollbar-thumb:hover { background: rgba(20,184,166,0.4); }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
@@ -208,14 +210,11 @@
   text-decoration: none;
 }
 
-.logoIcon { width: 36px; height: 36px; flex-shrink: 0; }
+.logoIcon  { width: 36px; height: 36px; flex-shrink: 0; }
 .logoText  { font-size: 19px; font-weight: 800; color: var(--white); }
 .logoAccent { color: var(--teal); }
 
-.sidebarType {
-  padding: 0 18px 16px;
-  flex-shrink: 0;
-}
+.sidebarType { padding: 0 18px 16px; flex-shrink: 0; }
 
 .typePill {
   display: inline-block;
@@ -269,10 +268,7 @@
   white-space: nowrap;
 }
 
-.navItem:hover {
-  color: var(--white);
-  background: rgba(255,255,255,0.05);
-}
+.navItem:hover { color: var(--white); background: rgba(255,255,255,0.05); }
 
 .navItemActive {
   color: var(--teal-light) !important;
@@ -324,10 +320,7 @@
   text-align: left;
 }
 
-.logoutBtn:hover {
-  color: #f87171;
-  background: rgba(248,113,113,0.06);
-}
+.logoutBtn:hover { color: #f87171; background: rgba(248,113,113,0.06); }
 
 .sidebarUser {
   display: flex;
@@ -435,11 +428,7 @@
   flex-shrink: 0;
 }
 
-.topbarUserInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+.topbarUserInfo { display: flex; flex-direction: column; gap: 2px; }
 
 .topbarUserName {
   font-size: 13px;
@@ -459,43 +448,30 @@
 }
 
 /* ══════════════════════════════════
-   RESPONSIVO — tablet/mobile
+   RESPONSIVO
 ══════════════════════════════════ */
 @media (max-width: 1024px) {
   .sidebar { left: 12px; }
   .topbar  { left: calc(12px + var(--sidebar-w) + 12px); right: 12px; }
-  .content {
-    margin-left: calc(12px + var(--sidebar-w) + 12px);
-    margin-right: 12px;
-  }
-  .contentFixed {
+  .content, .contentFixed {
     left: calc(12px + var(--sidebar-w) + 12px);
     right: 12px;
   }
 }
 
 @media (max-width: 768px) {
-  /* Esconde sidebar desktop, mostra drawer + hamburguer */
   .sidebar       { display: none; }
   .sidebarMobile { display: flex; }
   .overlay       { display: block; }
   .hamburger     { display: flex; }
 
-  /* Topbar ocupa a largura toda */
   .topbar {
     left: 12px;
     right: 12px;
     top: 12px;
   }
 
-  /* Conteúdo sem margem da sidebar */
-  .content {
-    margin-left: 12px;
-    margin-right: 12px;
-    margin-top: calc(12px + var(--topbar-h) + 12px);
-  }
-
-  .contentFixed {
+  .content, .contentFixed {
     left: 12px;
     right: 12px;
     top: calc(12px + var(--topbar-h) + 12px);

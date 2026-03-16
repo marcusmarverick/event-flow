@@ -7,6 +7,7 @@ import OrganizerProfile from './pages/OrganizerProfile';
 import Events from './pages/Events';
 import CreateEvent from './pages/CreateEvent';
 import MyEvents from './pages/MyEvents';
+import ParticipantEvents from './pages/ParticipantEvents';
 import HowItWorks from './pages/HowItWorks';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -22,6 +23,7 @@ function App() {
         <Route path="/participant/profile" element={<Profile />} />
         <Route path="/organizer/profile" element={<OrganizerProfile />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/participant/events" element={<ParticipantEvents />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />

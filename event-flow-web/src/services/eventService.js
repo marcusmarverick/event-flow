@@ -10,6 +10,18 @@ export async function listEvents() {
 }
 
 /**
+ * GET /events — busca um evento pelo id
+ * @param {string} id
+ * @returns {{ event: object }}
+ */
+export async function getEvent(id) {
+  const response = await api.get('/events');
+  const event = response.data.events.find(ev => String(ev.id) === String(id));
+  if (!event) throw new Error('Evento não encontrado');
+  return { event };
+}
+
+/**
  * POST /events (multipart/form-data)
  * @param {FormData} formData
  * @returns {{ event: object }}
@@ -49,4 +61,22 @@ export async function updateEvent(id, formData) {
  */
 export async function deleteEvent(id) {
   await api.delete(`/events/${id}`);
+}
+
+/**
+ * GET /participants/:id/events (authenticated)
+ * @param {string} userId
+ * @returns {{ events: Array }}
+ */
+export async function listMyRegistrations(userId) {
+  const response = await api.get(`/participants/${userId}/events`);
+  return response.data;
+}
+
+/**
+ * DELETE /registrations/:id (authenticated)
+ * @param {string} id
+ */
+export async function cancelRegistration(id) {
+  await api.delete(`/registrations/${id}`);
 }

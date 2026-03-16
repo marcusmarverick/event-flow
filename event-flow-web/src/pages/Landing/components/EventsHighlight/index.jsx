@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Link, useNavigate  } from 'react-router-dom';
 import { listEvents } from '../../../../services/eventService';
 import styles from './EventsHighlight.module.css';
 
+
 const API_URL = process.env.REACT_APP_API_URL;
 
-/**
- * Formata a data ISO para exibição: "7 Mar 2026"
- */
 function formatDate(isoString) {
   const date = new Date(isoString);
   return date.toLocaleDateString('pt-BR', {
@@ -16,30 +15,18 @@ function formatDate(isoString) {
   });
 }
 
-/**
- * Determina tag e cor com base na data do evento
- */
 function getTagInfo(isoString) {
   const now = new Date();
   const eventDate = new Date(isoString);
   const diffHours = (eventDate - now) / (1000 * 60 * 60);
-
-  if (diffHours < 0) {
-    return { tag: 'Finalizado', tagColor: 'done' };
-  }
-  if (diffHours <= 24) {
-    return { tag: 'Ao vivo', tagColor: 'live' };
-  }
-  return { tag: 'Próximo', tagColor: 'upcoming' };
+  if (diffHours < 0)   return { tag: 'Finalizado', tagColor: 'done' };
+  if (diffHours <= 24) return { tag: 'Ao vivo',    tagColor: 'live' };
+  return                      { tag: 'Próximo',     tagColor: 'upcoming' };
 }
 
-/**
- * Mapeia evento da API para o formato do Card
- */
 function toCardEvent(apiEvent) {
   const { tag, tagColor } = getTagInfo(apiEvent.dateTime);
   const isDone = tagColor === 'done';
-
   return {
     id: apiEvent.id,
     tag,
@@ -53,8 +40,9 @@ function toCardEvent(apiEvent) {
 }
 
 function Card({ ev }) {
+  const navigate = useNavigate();
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={() => navigate(`/events/${ev.id}`)} style={{ cursor: 'pointer' }}>
       <div className={styles.cardImgWrap}>
         <img src={ev.img} alt={ev.title} className={styles.cardImg} />
         <div className={styles.cardImgOverlay} />
@@ -109,6 +97,9 @@ function EventsHighlight() {
           <div className={styles.headerRight}>
             <span className={styles.totalNum}>{events.length}</span>
             <span className={styles.totalLabel}>eventos</span>
+            <Link to="/events" className={styles.exploreBtn}>
+              Ver todos os eventos →
+            </Link>
           </div>
         </div>
 
@@ -117,7 +108,6 @@ function EventsHighlight() {
           <div className={styles.fadeLeft} />
           <div className={styles.fadeRight} />
           <div className={styles.marqueeTrack}>
-            {/* duplica os cards para loop infinito */}
             {[...events, ...events].map((ev, i) => (
               <Card key={i} ev={ev} />
             ))}

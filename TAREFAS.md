@@ -63,22 +63,24 @@
   - [✅] Enviar para API
   - [✅] Feedback de sucesso/erro
 
-- [🟨] **RF03-FE:** Criar página de Edição de Perfil
+- [✅] **RF03-FE:** Criar página de Edição de Perfil
   - [🟨] Carregar dados atuais do participante (mock até login real ser integrado)
   - [✅] Formulário editável (Nome, E-mail)
   - [✅] Botão de salvar com feedback
   - [✅] Tratamento de erros
+  - [✅] Página de perfil do organizador criada (`/organizer/profile`)
 
-- [ ] **RF04-FE:** Criar página de Meus Eventos (Participante)
-  - [ ] Listar eventos inscritos
-  - [ ] Exibir: Nome, Data, Hora, Localização, Capacidade
-  - [ ] Botão para ver detalhes do evento
-  - [ ] Botão para cancelar inscrição com confirmação
+- [✅] **RF04-FE:** Criar página de Meus Eventos (Participante)
+  - [✅] Listar eventos inscritos via GET `/participants/:id/events`
+  - [✅] Exibir: Nome, Data, Hora, Localização
+  - [✅] Filtros: Todos, Próximos, Ao vivo, Finalizados
+  - [✅] Botão para ver detalhes do evento
+  - [✅] Botão para cancelar inscrição com modal de confirmação
 
-- [ ] **RF05-FE:** Implementar cancelamento de inscrição
-  - [ ] Modal de confirmação
-  - [ ] Requisição de DELETE para API
-  - [ ] Atualizar lista de eventos após sucesso
+- [🟨] **RF05-FE:** Implementar cancelamento de inscrição
+  - [✅] Modal de confirmação
+  - [🟨] Requisição de DELETE para API (aguardando RF05-BE)
+  - [🟨] Atualizar lista de eventos após sucesso
 
 ---
 
@@ -148,7 +150,8 @@
   - [✅] Requisição de DELETE para API
   - [✅] Redirecionar se sucesso
 
-- [ ] **RF10-FE:** Criar página de Participantes do Evento
+- [🟨] **RF10-FE:** Criar página de Participantes do Evento
+  - [🟨] Botão "Ver participantes" na página de detalhes (aguardando endpoint)
   - [ ] Listar inscritos no evento
   - [ ] Exibir: Nome, E-mail, Data de inscrição
   - [ ] Opção de exportar lista (opcional)
@@ -174,9 +177,8 @@
 - [ ] **RN05-BE:** Validar dados obrigatórios do evento
   - [ ] Nome, Data/Hora, Localização, Capacidade Máxima
 
-- [ ] Criar endpoint de listagem geral de eventos (GET `/events`)
-  - [ ] Listar todos os eventos disponíveis
-  - [ ] Incluir filtros: data, localização, capacidade disponível
+- [✅] Criar endpoint de listagem geral de eventos (GET `/events`)
+  - [✅] Listar todos os eventos disponíveis
 
 - [ ] Criar endpoint de inscrição em evento (POST `/events/:id/register`)
   - [ ] Validar autenticação
@@ -186,40 +188,31 @@
 
 ### Frontend
 
-- [ ] **Geral-FE:** Criar página de Explorar Eventos
-  - [ ] Listar todos os eventos disponíveis
-  - [ ] Exibir: Nome, Data, Hora, Localização, Capacidade (disponível/máx)
-  - [ ] Filtros: Data, Localização
-  - [ ] Botão para ver detalhes
-  - [ ] Botão para se inscrever (com validações)
+- [✅] **Geral-FE:** Criar página de Explorar Eventos (`/events`)
+  - [✅] Listar todos os eventos disponíveis
+  - [✅] Exibir: Nome, Data, Hora, Localização, Capacidade
+  - [✅] Filtros: Todos, Próximos, Ao vivo, Finalizados
+  - [✅] Hero com carrossel automático de imagens
+  - [✅] Botão para ver detalhes
+  - [🟨] Botão para se inscrever (aguardando endpoint)
 
-- [ ] **Geral-FE:** Criar página de Detalhes do Evento
-  - [ ] Exibir todas as informações do evento
-  - [ ] Descrição (se houver)
-  - [ ] Organizador
-  - [ ] Número de inscritos
-  - [ ] Botão de inscrever ou "Já inscrito"
-  - [ ] Tratamento de erros (RN01-RN03)
+- [✅] **Geral-FE:** Criar página de Detalhes do Evento (`/events/:id`)
+  - [✅] Exibir todas as informações do evento
+  - [✅] Descrição (se houver)
+  - [✅] Organizador
+  - [✅] Contador regressivo (dias, horas, minutos, segundos)
+  - [✅] Botão de inscrever (visual — aguardando endpoint)
+  - [✅] Botões editar/excluir para organizador criador
+  - [🟨] Tratamento de erros (RN01-RN03) — aguardando endpoint
 
 ---
 
 ## 🏗️ Banco de Dados
 
 - [✅] **BE:** Criar tabela `users`
-  - [✅] id, type (participant/organizer), email, password_hash, name, cpf (nullable), created_at, updated_at
-
 - [✅] **BE:** Criar tabela `events`
-  - [✅] id, user_id, name, description, date_time, location, capacity, created_at, updated_at
-
 - [✅] **BE:** Criar tabela `registrations`
-  - [✅] id, user_id, event_id, created_at
-
 - [✅] **BE:** Criar índices para performance
-  - [✅] Índice em `users.email`
-  - [✅] Índice em `users.cpf`
-  - [✅] Índice em `events.user_id`
-  - [✅] Índice em `registrations.user_id`
-  - [✅] Índice em `registrations.event_id`
 
 ---
 
@@ -229,63 +222,74 @@
 
 - [✅] **Landing-FE:** Criar página inicial (Landing Page)
   - [✅] Navbar com logo, links de navegação e botões de Login/Cadastro
+  - [✅] Link "Início" na navbar para usuários logados
+  - [✅] Cards da Hero clicáveis → detalhes do evento
+  - [✅] Botão "Ver todos os eventos" no carrossel → `/events`
+  - [✅] Card "Como funciona" clicável → `/how-it-works`
+  - [✅] Card "Criar evento" clicável → `/events/create`
   - [✅] Seção Hero com carrossel de 3 slides e CTAs
-  - [✅] Seção Marquee (faixa animada com categorias de eventos)
-  - [✅] Seção UserTypes (cards para Participante e Organizador)
-  - [✅] Seção Features (diferenciais da plataforma)
-  - [✅] Seção HowItWorks (passo a passo de uso)
-  - [✅] Seção EventsHighlight (12 eventos em destaque — mockados, pendente seeder do Ian)
-  - [✅] Seção Instagram (feed decorativo)
-  - [✅] Seção CTA final com chamada para cadastro
-  - [✅] Footer com links e redes sociais
+  - [✅] Seção Marquee, UserTypes, Features, HowItWorks
+  - [✅] Seção EventsHighlight com botão "Ver todos os eventos"
+  - [✅] Cards do EventsHighlight clicáveis → detalhes do evento
+  - [✅] Seção Instagram, CTA final, Footer
   - [✅] Favicon personalizado (calendário teal + curvas amber)
-  - [✅] `index.html` com lang pt-BR, theme-color e meta descrição
-  - [✅] `manifest.json` atualizado com nome e ícones do EventFlow
-  - [✅] CSS Modules, imagens locais em `src/assets/images/landing/`
+  - [✅] Título da página: EventFlow
   - [✅] Mergeada via PR #7
+
+### Páginas Internas (AppLayout)
+
+- [✅] **AppLayout-FE:** Layout compartilhado com sidebar e topbar fixas
+  - [✅] Sidebar fixa com 3 seções (Menu, Plataforma, Conta)
+  - [✅] Topbar fixa com busca e avatar
+  - [✅] Menu hamburguer para mobile (drawer)
+  - [✅] Navegação diferente para participante e organizador
+  - [✅] Botão de logout na sidebar
+  - [✅] Conteúdo rola internamente sem vazar atrás da topbar
+
+### Páginas Secundárias
+
+- [✅] **Páginas-FE:** Como funciona, Sobre nós, Contato
+  - [✅] Hero com imagem responsiva por breakpoint
+  - [✅] Guia diferente para participante e organizador (Como funciona)
+  - [✅] Time com 5 membros (Sobre nós)
+  - [✅] Conteúdo fixo sem rolagem desnecessária
 
 ### Página de Perfil
 
-- [🟨] **Perfil-FE:** Criar página de Perfil do Usuário
-  - [✅] Navbar sticky com logo, links, avatar, nome e botão de logout
-  - [✅] Banner CTA com carrossel automático das imagens da Hero (hero1/hero2/hero3)
-  - [✅] Banner do perfil com glow teal/amber e grid decorativo
-  - [✅] Avatar com anel animado + botão de trocar foto (upload local)
-  - [✅] Preview dinâmica: nome, ocupação, localização atualizam em tempo real
-  - [✅] Badge de tipo (Participante teal / Organizador amber)
-  - [✅] Stats: total de eventos, finalizados, próximos
-  - [✅] Seção Informações Básicas (Nome, E-mail, Ocupação, CPF somente leitura, Tipo)
-  - [✅] Seção Sobre Mim (Bio com contador de caracteres)
-  - [✅] Seção Contato e Localização (Telefone, Cidade, Estado)
-  - [✅] Seção Redes Sociais (LinkedIn, Instagram)
-  - [✅] Botão Salvar com spinner de loading e feedback de sucesso/erro
-  - [✅] Integração com API: PUT `/participants/:id` e PUT `/organizers/:id`
-  - [🟨] Seção Participações Recentes (mockada — integrar com RF04-BE)
-  - [🟨] Dados extras (bio, ocupação, telefone, redes) salvos localmente — aguardando campos no backend
-  - [🟨] Mock de usuário ativo — remover quando login real estiver integrado
+- [✅] **Perfil-FE:** Perfil do Participante (`/participant/profile`)
+  - [✅] Banner CTA com carrossel, formulário completo, participações recentes (mock)
+  - [✅] Integração com API: PUT `/participants/:id`
+
+- [✅] **Perfil-FE:** Perfil do Organizador (`/organizer/profile`)
+  - [✅] Tema âmbar, stats de eventos reais da API
+  - [✅] Lista dos 3 eventos mais recentes
+  - [✅] Integração com API: PUT `/organizers/:id`
+
+### Meus Eventos
+
+- [✅] **MyEvents-FE:** Meus Eventos do Organizador (`/organizer/events`)
+  - [✅] Migrado para AppLayout
+  - [✅] Lista de eventos com edição e exclusão
+  - [✅] Empty state
+  - [✅] Seção "Eventos que você pode gostar" com 4 cards
+
+- [✅] **MyEvents-FE:** Meus Eventos do Participante (`/participant/events`)
+  - [✅] Lista de inscrições via API
+  - [✅] Filtros: Todos, Próximos, Ao vivo, Finalizados
+  - [✅] Botão ver detalhes
+  - [✅] Botão cancelar inscrição com modal (aguardando RF05-BE)
+  - [✅] Empty state com link para explorar eventos
 
 ### Geral
 
-- [🟨] Barra de navegação com menu
-  - [✅] Implementada na página de Perfil
-  - [✅] Links distintos para Participante/Organizador
-  - [✅] Avatar + nome do usuário
-  - [✅] Botão de Logout
-  - [ ] Implementar nas demais páginas (Meus Eventos, Criar Evento, etc.)
-
-- [ ] Página inicial/dashboard
-  - [ ] Diferentes views para Participante e Organizador
-
-- [ ] Responsividade
-  - [✅] Landing Page responsiva
-  - [✅] Página de Perfil responsiva (mobile/tablet/desktop)
-  - [ ] Testes nas demais páginas
-
-- [🟨] Feedback visual
-  - [✅] Loading spinners (Perfil, Login, Cadastro)
-  - [✅] Mensagens de sucesso/erro (Perfil, Login, Cadastro)
-  - [ ] Toast/alert global reutilizável
-  - [ ] Confirmação de ações destrutivas (cancelar inscrição, deletar evento)
+- [✅] Navegação via sidebar em todas as páginas internas
+- [✅] Responsividade com hamburguer mobile em todas as páginas internas
+- [✅] Confirmação de ações destrutivas (cancelar inscrição, deletar evento)
+- [✅] Loading spinners em todas as páginas
+- [✅] Feedback de sucesso/erro
+- [ ] Toast/alert global reutilizável
+- [ ] Dashboard do Participante (`/participant/dashboard`)
+- [ ] Dashboard do Organizador (`/organizer/dashboard`)
 
 ---
 
@@ -299,16 +303,19 @@
 
 ## 🚀 Status Geral
 
-| Módulo          | Backend | Frontend | Status            |
-| --------------- | :-----: | :------: | ----------------- |
-| Autenticação    |   ✅    |    🟨    | FE em progresso   |
-| Participante    |   🟨    |    🟨    | Em progresso      |
-| Organizador     |   🟨    |    ⬜    | BE quase completo |
-| Eventos         |   ⬜    |    ⬜    | A fazer           |
-| Banco de Dados  |   ✅    |    -     | Concluído         |
-| Landing Page    |    -    |    ✅    | Concluída         |
-| Perfil          |    -    |    🟨    | Em progresso      |
-| Design/UX Geral |    -    |    🟨    | Em progresso      |
+| Módulo           | Backend | Frontend | Status              |
+| ---------------- | :-----: | :------: | ------------------- |
+| Autenticação     |   ✅    |    🟨    | FE em progresso     |
+| Participante     |   🟨    |    ✅    | BE pendente RF05    |
+| Organizador      |   ✅    |    ✅    | Concluído           |
+| Eventos          |   🟨    |    ✅    | BE pendente inscrição |
+| Banco de Dados   |   ✅    |    -     | Concluído           |
+| Landing Page     |    -    |    ✅    | Concluída           |
+| Perfil           |    -    |    ✅    | Concluído           |
+| AppLayout/Nav    |    -    |    ✅    | Concluído           |
+| Páginas Internas |    -    |    ✅    | Concluídas          |
+| Dashboards       |    -    |    ⬜    | A fazer             |
+| Design/UX Geral  |    -    |    🟨    | Em progresso        |
 
 ---
 

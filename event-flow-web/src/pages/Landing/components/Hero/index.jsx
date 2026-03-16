@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { listEvents } from '../../../../services/eventService';
 import styles from './Hero.module.css';
 import presencial from '../../../../assets/images/landing/presencial.jpg';
@@ -7,10 +8,6 @@ import como from '../../../../assets/images/landing/comofunci.jpg';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-
-/**
- * Embaralha array (Fisher-Yates) e retorna os primeiros n
- */
 function pickRandom(arr, n) {
   const copy = [...arr];
   for (let i = copy.length - 1; i > 0; i--) {
@@ -26,6 +23,7 @@ const miniCards = [
 ];
 
 function Hero() {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [slides, setSlides] = useState([]);
   const slide = slides[current] || {};
@@ -55,6 +53,7 @@ function Hero() {
 
         setGridEvents(
           pickRandom(events, 4).map((ev) => ({
+            id: ev.id,
             img: ev.image ? `${API_URL}${ev.image}` : null,
             title: ev.name,
             category: ev.location,
@@ -84,7 +83,6 @@ function Hero() {
 
   return (
     <section className={styles.heroWrap}>
-      {/* glows de fundo */}
       <div className={styles.glowTeal} />
       <div className={styles.glowAmber} />
 
@@ -94,7 +92,6 @@ function Hero() {
         <div className={styles.banner}>
           <div className={styles.bannerBg} />
 
-          {/* badge */}
           <div className={styles.badge}>
             <span className={styles.badgeDot} />
             EventFlow
@@ -146,7 +143,12 @@ function Hero() {
 
             <div className={styles.artworkGrid}>
               {gridEvents.map((ev, i) => (
-                <div key={i} className={styles.artworkItem}>
+                <div
+                  key={i}
+                  className={styles.artworkItem}
+                  onClick={() => navigate(`/events/${ev.id}`)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <img src={ev.img} alt={ev.title} className={styles.artworkImg} />
                   <div className={styles.artworkOverlay}>
                     <span className={styles.artworkCategory}>{ev.category}</span>
@@ -156,7 +158,9 @@ function Hero() {
               ))}
             </div>
 
-            <button className={styles.viewMore}>Ver todos os eventos</button>
+            <button className={styles.viewMore} onClick={() => navigate('/events')}>
+              Ver todos os eventos
+            </button>
           </div>
 
           {/* coluna direita */}
@@ -166,7 +170,11 @@ function Hero() {
               <h2 className={styles.searchTitle}>Próximos Eventos</h2>
               <div className={styles.searchList}>
                 {destaques.map((ev, i) => (
-                  <button key={i} className={styles.searchItem}>
+                  <button
+                    key={i}
+                    className={styles.searchItem}
+                    onClick={() => navigate('/events')}
+                  >
                     <span className={styles.searchIcon}>📅</span>
                     <span>{ev}</span>
                   </button>
@@ -182,19 +190,23 @@ function Hero() {
                   <h3 className={styles.miniCardLabel}>{card.label}</h3>
                 </div>
               ))}
-              <div className={`${styles.miniCard} ${styles.miniCardAccent}`}>
+              <div
+                className={`${styles.miniCard} ${styles.miniCardAccent}`}
+                onClick={() => navigate('/events/create')}
+                style={{ cursor: 'pointer' }}
+              >
                 <div className={styles.miniCardIcon}>✦</div>
                 <h3 className={styles.miniCardLabel}>Criar evento</h3>
                 <p className={styles.miniCardSub}>Comece agora</p>
               </div>
             </div>
 
-            <div className={styles.featuredCard}>
-              <img
-                src= {como}
-                alt="Destaque"
-                className={styles.featuredImg}
-              />
+            <div
+              className={styles.featuredCard}
+              onClick={() => navigate('/how-it-works')}
+              style={{ cursor: 'pointer' }}
+            >
+              <img src={como} alt="Destaque" className={styles.featuredImg} />
               <div className={styles.featuredOverlay} />
               <div className={styles.featuredContent}>
                 <div className={styles.featuredPlay}>▶</div>

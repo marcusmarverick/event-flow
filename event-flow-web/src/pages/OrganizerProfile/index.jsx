@@ -1,13 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import styles from './Profile.module.css';
+import { listMyEvents } from '../../services/eventService';
+import styles from './OrganizerProfile.module.css';
 
 import hero1 from '../../assets/images/landing/hero1.jpg';
 import hero2 from '../../assets/images/landing/hero2.jpg';
 import hero3 from '../../assets/images/landing/hero3.jpg';
 
-const API_URL = 'http://localhost:3333';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3333';
 
 const CTA_SLIDES = [
   { img: hero1, label: 'Summit de Inovação' },
@@ -15,32 +16,17 @@ const CTA_SLIDES = [
   { img: hero3, label: 'Hackathon Dev Connect' },
 ];
 
-const RECENT_EVENTS_MOCK = [
-  { id: 1, name: 'Summit de Inovação', date: '03 Fev 2026', location: 'São Paulo, SP', status: 'Finalizado' },
-  { id: 2, name: 'Hackathon Dev Connect', date: '05 Mar 2026', location: 'Online', status: 'Finalizado' },
-  { id: 3, name: 'Festival de Design & UX', date: '20 Mai 2026', location: 'Rio de Janeiro, RJ', status: 'Próximo' },
-];
+export default function OrganizerProfile() {
+  const navigate = useNavigate();
+  const { user: realUser, token, saveSession, logout, isAuthenticated } = useAuth();
 
-function LogoIcon() {
-  return (
-    <svg className={styles.logoIcon} viewBox="0 0 42 42" fill="none">
-      <rect width="42" height="42" rx="10" fill="rgba(20,184,166,0.15)" />
-      <rect x="7" y="11" width="28" height="22" rx="4" stroke="#14b8a6" strokeWidth="1.8" />
-      <line x1="7" y1="18" x2="35" y2="18" stroke="#14b8a6" strokeWidth="1.8" />
-      <line x1="14" y1="7" x2="14" y2="13" stroke="#14b8a6" strokeWidth="2" strokeLinecap="round" />
-      <line x1="28" y1="7" x2="28" y2="13" stroke="#14b8a6" strokeWidth="2" strokeLinecap="round" />
-      <path d="M12 25 Q21 21 30 25" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-      <path d="M14 29 Q21 25 28 29" stroke="#f59e0b" strokeWidth="1.4" strokeLinecap="round" fill="none" opacity="0.45" />
-    </svg>
-  );
-}
+  useEffect(() => {
+    if (!isAuthenticated || realUser?.type !== 'organizer') {
+      navigate('/', { replace: true });
+    }
+  }, [isAuthenticated, realUser, navigate]);
 
-export default function Profile() {
-  const { user: realUser, token, saveSession, logout } = useAuth();
-  const user = realUser || {
-    id: '1', name: 'Érika Laiane', email: 'erika@email.com',
-    type: 'participant', cpf: '123.456.789-00',
-  };
+  const user = realUser;
 
   // Carrossel CTA
   const [ctaSlide, setCtaSlide] = useState(0);
@@ -66,7 +52,18 @@ export default function Profile() {
 
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState(null);
-  const isOrganizer = user?.type === 'organizer';
+
+  // Eventos do organizador
+  const [myEvents, setMyEvents] = useState([]);
+  useEffect(() => {
+    listMyEvents()
+      .then(({ events: data }) => setMyEvents(data))
+      .catch(() => setMyEvents([]));
+  }, []);
+
+  const totalEvents   = myEvents.length;
+  const activeEvents  = myEvents.filter(ev => new Date(ev.dateTime) >= new Date()).length;
+  const doneEvents    = myEvents.filter(ev => new Date(ev.dateTime) < new Date()).length;
 
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -82,11 +79,8 @@ export default function Profile() {
     e.preventDefault();
     setLoading(true);
     setFeedback(null);
-    const endpoint = isOrganizer
-      ? `${API_URL}/organizers/${user?.id}`
-      : `${API_URL}/participants/${user?.id}`;
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(`${API_URL}/organizers/${user?.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ name: form.name, email: form.email }),
@@ -104,6 +98,8 @@ export default function Profile() {
 
   const initials = (user?.name || 'U').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
 
+  if (!isAuthenticated || realUser?.type !== 'organizer') return null;
+
   return (
     <div className={styles.page}>
       <div className={styles.dots} />
@@ -112,15 +108,23 @@ export default function Profile() {
       {/* ── Navbar ── */}
       <nav className={styles.navbar}>
         <Link to="/" className={styles.navLogo}>
-          <LogoIcon />
+          <svg className={styles.logoIcon} viewBox="0 0 42 42" fill="none">
+            <rect width="42" height="42" rx="10" fill="rgba(20,184,166,0.15)" />
+            <rect x="7" y="11" width="28" height="22" rx="4" stroke="#14b8a6" strokeWidth="1.8" />
+            <line x1="7" y1="18" x2="35" y2="18" stroke="#14b8a6" strokeWidth="1.8" />
+            <line x1="14" y1="7" x2="14" y2="13" stroke="#14b8a6" strokeWidth="2" strokeLinecap="round" />
+            <line x1="28" y1="7" x2="28" y2="13" stroke="#14b8a6" strokeWidth="2" strokeLinecap="round" />
+            <path d="M12 25 Q21 21 30 25" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+            <path d="M14 29 Q21 25 28 29" stroke="#f59e0b" strokeWidth="1.4" strokeLinecap="round" fill="none" opacity="0.45" />
+          </svg>
           <span className={styles.navLogoText}>Event<span className={styles.navAccent}>Flow</span></span>
         </Link>
 
         <ul className={styles.navLinks}>
           <li><Link to="/events" className={styles.navLink}>Explorar eventos</Link></li>
-          {isOrganizer && <li><Link to="/organizer/events" className={styles.navLink}>Meus eventos</Link></li>}
-          {!isOrganizer && <li><Link to="/participant/events" className={styles.navLink}>Minhas inscrições</Link></li>}
-          <li><Link to="/participant/profile" className={`${styles.navLink} ${styles.navLinkActive}`}>Perfil</Link></li>
+          <li><Link to="/events/create" className={styles.navLink}>Criar evento</Link></li>
+          <li><Link to="/organizer/events" className={styles.navLink}>Meus eventos</Link></li>
+          <li><Link to="/organizer/profile" className={`${styles.navLink} ${styles.navLinkActive}`}>Perfil</Link></li>
         </ul>
 
         <div className={styles.navUser}>
@@ -132,9 +136,7 @@ export default function Profile() {
           </div>
           <div className={styles.navUserInfo}>
             <span className={styles.navUserName}>{user?.name?.split(' ')[0]}</span>
-            <span className={`${styles.navUserType} ${isOrganizer ? styles.navTypeOrg : styles.navTypePart}`}>
-              {isOrganizer ? 'Organizador' : 'Participante'}
-            </span>
+            <span className={`${styles.navUserType} ${styles.navTypeOrg}`}>Organizador</span>
           </div>
           <button className={styles.navLogout} onClick={logout} title="Sair">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -148,9 +150,8 @@ export default function Profile() {
 
       <div className={styles.wrapper}>
 
-        {/* ── CTA Banner com carrossel ── */}
+        {/* ── CTA Banner ── */}
         <div className={styles.ctaBanner}>
-          {/* Carrossel de fundo */}
           <div className={styles.ctaCarousel}>
             {CTA_SLIDES.map((s, i) => (
               <div
@@ -161,35 +162,32 @@ export default function Profile() {
             ))}
             <div className={styles.ctaOverlay} />
           </div>
-
-          {/* Conteúdo */}
           <div className={styles.ctaContent}>
             <div className={styles.ctaLeft}>
-              <p className={styles.ctaEyebrow}>✦ DESCUBRA ALGO NOVO</p>
+              <p className={styles.ctaEyebrow}>🎤 PAINEL DO ORGANIZADOR</p>
               <h2 className={styles.ctaTitle}>
-                Encontre eventos <span className={styles.ctaHighlight}>feitos para você</span>
+                Gerencie seus <span className={styles.ctaHighlight}>eventos</span>
               </h2>
               <p className={styles.ctaDesc}>
-                Tecnologia, design, negócios e muito mais. Explore centenas de eventos e faça parte de algo maior.
+                Crie, edite e acompanhe seus eventos. Veja quem está inscrito e mantenha sua audiência engajada.
               </p>
               <div className={styles.ctaSlideLabel}>
                 📍 {CTA_SLIDES[ctaSlide].label}
               </div>
             </div>
-
             <div className={styles.ctaRight}>
               <div className={styles.ctaStats}>
                 <div className={styles.ctaStat}>
-                  <span className={styles.ctaStatNum}>+120</span>
+                  <span className={styles.ctaStatNum}>{totalEvents}</span>
                   <span className={styles.ctaStatLabel}>Eventos</span>
                 </div>
                 <div className={styles.ctaStatDiv} />
                 <div className={styles.ctaStat}>
-                  <span className={styles.ctaStatNum}>+3k</span>
-                  <span className={styles.ctaStatLabel}>Participantes</span>
+                  <span className={styles.ctaStatNum}>{activeEvents}</span>
+                  <span className={styles.ctaStatLabel}>Ativos</span>
                 </div>
               </div>
-              <Link to="/events" className={styles.ctaBtn}>Explorar eventos →</Link>
+              <Link to="/organizer/events" className={styles.ctaBtn}>Meus eventos →</Link>
               <div className={styles.ctaDots}>
                 {CTA_SLIDES.map((_, i) => (
                   <button
@@ -203,16 +201,14 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* ── Card principal (fundo claro) ── */}
+        {/* ── Card principal ── */}
         <div className={styles.card}>
 
-          {/* Banner do perfil */}
           <div className={styles.profileBanner}>
             <div className={styles.profileBannerGlow} />
             <div className={styles.profileBannerGrid} />
           </div>
 
-          {/* Header */}
           <div className={styles.profileHeader}>
             <div className={styles.avatarWrap}>
               <div className={styles.avatarRing} />
@@ -238,25 +234,23 @@ export default function Profile() {
                   📍 {form.city}{form.state ? `, ${form.state}` : ''}
                 </p>
               )}
-              <span className={`${styles.typeBadge} ${isOrganizer ? styles.badgeOrg : styles.badgePart}`}>
-                {isOrganizer ? '🎤 Organizador' : '🎟️ Participante'}
-              </span>
+              <span className={styles.typeBadge}>🎤 Organizador</span>
             </div>
 
             <div className={styles.profileStats}>
               <div className={styles.pStat}>
-                <span className={styles.pStatNum}>{RECENT_EVENTS_MOCK.length}</span>
-                <span className={styles.pStatLabel}>Eventos</span>
+                <span className={styles.pStatNum}>{totalEvents}</span>
+                <span className={styles.pStatLabel}>Total</span>
               </div>
               <div className={styles.pStatDiv} />
               <div className={styles.pStat}>
-                <span className={styles.pStatNum}>2</span>
+                <span className={styles.pStatNum}>{activeEvents}</span>
+                <span className={styles.pStatLabel}>Ativos</span>
+              </div>
+              <div className={styles.pStatDiv} />
+              <div className={styles.pStat}>
+                <span className={styles.pStatNum}>{doneEvents}</span>
                 <span className={styles.pStatLabel}>Finalizados</span>
-              </div>
-              <div className={styles.pStatDiv} />
-              <div className={styles.pStat}>
-                <span className={styles.pStatNum}>1</span>
-                <span className={styles.pStatLabel}>Próximos</span>
               </div>
             </div>
           </div>
@@ -290,23 +284,14 @@ export default function Profile() {
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8L6 7h12l-2-4z"/></svg>
                     Ocupação / Profissão
                   </label>
-                  <input className={styles.input} type="text" name="occupation" value={form.occupation} onChange={handleChange} placeholder="Ex: Desenvolvedor Front-End" maxLength={120} />
+                  <input className={styles.input} type="text" name="occupation" value={form.occupation} onChange={handleChange} placeholder="Ex: Produtor de eventos" maxLength={120} />
                 </div>
-                {!isOrganizer && (
-                  <div className={styles.field}>
-                    <label className={styles.label}>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-                      CPF <span className={styles.readonlyTag}>não editável</span>
-                    </label>
-                    <input className={`${styles.input} ${styles.inputDisabled}`} type="text" value={user?.cpf || '—'} disabled />
-                  </div>
-                )}
                 <div className={styles.field}>
                   <label className={styles.label}>
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     Tipo de conta
                   </label>
-                  <input className={`${styles.input} ${styles.inputDisabled}`} type="text" value={isOrganizer ? 'Organizador' : 'Participante'} disabled />
+                  <input className={`${styles.input} ${styles.inputDisabled}`} type="text" value="Organizador" disabled />
                 </div>
               </div>
             </div>
@@ -322,7 +307,7 @@ export default function Profile() {
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                   Bio
                 </label>
-                <textarea className={styles.textarea} name="bio" value={form.bio} onChange={handleChange} placeholder="Conte um pouco sobre você..." maxLength={500} rows={4} />
+                <textarea className={styles.textarea} name="bio" value={form.bio} onChange={handleChange} placeholder="Conte sobre você e os eventos que organiza..." maxLength={500} rows={4} />
                 <span className={styles.charCount}>{form.bio.length}/500</span>
               </div>
             </div>
@@ -401,27 +386,34 @@ export default function Profile() {
             </div>
           </form>
 
-          {/* ── Participações recentes ── */}
+          {/* ── Meus eventos recentes ── */}
           <div className={styles.eventsSection}>
             <div className={styles.sectionHeader}>
               <div className={styles.sectionDot} />
-              <span className={styles.sectionLabel}>PARTICIPAÇÕES RECENTES</span>
+              <span className={styles.sectionLabel}>MEUS EVENTOS RECENTES</span>
               <div className={styles.sectionLine} />
+              <Link to="/organizer/events" className={styles.verTodosBtn}>Ver todos →</Link>
             </div>
-            <div className={styles.eventsList}>
-              {RECENT_EVENTS_MOCK.map(ev => (
-                <div key={ev.id} className={styles.eventItem}>
-                  <div className={styles.eventIcon}>📅</div>
-                  <div className={styles.eventInfo}>
-                    <span className={styles.eventName}>{ev.name}</span>
-                    <span className={styles.eventMeta}>{ev.date} · {ev.location}</span>
+            {myEvents.length === 0 ? (
+              <p className={styles.emptyText}>Nenhum evento criado ainda. <Link to="/events/create" className={styles.emptyLink}>Criar primeiro evento →</Link></p>
+            ) : (
+              <div className={styles.eventsList}>
+                {myEvents.slice(0, 3).map(ev => (
+                  <div key={ev.id} className={styles.eventItem}>
+                    <div className={styles.eventIcon}>🎤</div>
+                    <div className={styles.eventInfo}>
+                      <span className={styles.eventName}>{ev.name}</span>
+                      <span className={styles.eventMeta}>
+                        {new Date(ev.dateTime).toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' })} · {ev.location}
+                      </span>
+                    </div>
+                    <span className={`${styles.eventStatus} ${new Date(ev.dateTime) >= new Date() ? styles.statusNext : styles.statusDone}`}>
+                      {new Date(ev.dateTime) >= new Date() ? 'Ativo' : 'Finalizado'}
+                    </span>
                   </div>
-                  <span className={`${styles.eventStatus} ${ev.status === 'Próximo' ? styles.statusNext : styles.statusDone}`}>
-                    {ev.status}
-                  </span>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
 
         </div>

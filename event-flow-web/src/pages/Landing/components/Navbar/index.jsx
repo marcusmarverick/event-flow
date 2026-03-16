@@ -24,8 +24,9 @@ function Navbar() {
   const initials = isAuthenticated
     ? (user?.name || 'U').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()
     : '';
-  const roleLabel = user?.type === 'organizer' ? 'Organizador' : 'Participante';
-  const profileLink = user?.type === 'organizer' ? '/organizer/events' : '/participant/profile';
+  const roleLabel   = user?.type === 'organizer' ? 'Organizador' : 'Participante';
+  const profileLink = user?.type === 'organizer' ? '/organizer/profile' : '/participant/profile';
+  const dashLink    = '/events'; // fictício até dashboard ficar pronto
 
   return (
     <nav className={styles.nav}>
@@ -38,6 +39,9 @@ function Navbar() {
 
       {/* Links — desktop */}
       <ul className={styles.navLinks}>
+        {isAuthenticated && (
+          <li><Link to={dashLink} className={styles.navLinkHighlight}>Início</Link></li>
+        )}
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#funcionalidades">Funcionalidades</a></li>
         <li><a href="#como-funciona">Como funciona</a></li>
@@ -79,14 +83,15 @@ function Navbar() {
         onClick={() => setOpen(o => !o)}
         aria-label="Menu"
       >
-        <span />
-        <span />
-        <span />
+        <span /><span /><span />
       </button>
 
       {/* Menu mobile */}
       <div className={`${styles.mobileMenu} ${open ? styles.mobileMenuOpen : ''}`}>
         <ul className={styles.mobileLinks}>
+          {isAuthenticated && (
+            <li><Link to={dashLink} onClick={() => setOpen(false)} className={styles.navLinkHighlight}>Início</Link></li>
+          )}
           <li><a href="#sobre" onClick={() => setOpen(false)}>Sobre</a></li>
           <li><a href="#funcionalidades" onClick={() => setOpen(false)}>Funcionalidades</a></li>
           <li><a href="#como-funciona" onClick={() => setOpen(false)}>Como funciona</a></li>
@@ -111,9 +116,7 @@ function Navbar() {
             </div>
           ) : (
             <>
-              <Link to="/login" className={styles.btnGhost} onClick={() => setOpen(false)}>
-                Entrar
-              </Link>
+              <Link to="/login" className={styles.btnGhost} onClick={() => setOpen(false)}>Entrar</Link>
               <Link to="/register" className={styles.btnCta} onClick={() => setOpen(false)}>
                 <span className={styles.btnCtaDot} />
                 Criar conta

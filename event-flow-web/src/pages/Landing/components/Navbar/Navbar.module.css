@@ -82,6 +82,16 @@
 .navLinks a:hover { color: #ffffff; }
 .navLinks a:hover::after { transform: scaleX(1); }
 
+/* Link destacado (Início) */
+.navLinkHighlight {
+  color: #14b8a6 !important;
+  font-weight: 700 !important;
+}
+
+.navLinkHighlight::after {
+  transform: scaleX(1) !important;
+}
+
 /* ─── Actions — desktop ───────────────────────────────── */
 .navActions {
   display: flex;
@@ -247,17 +257,9 @@
 
 .hamburger:hover span { background: #ffffff; }
 
-/* animação X quando aberto */
-.hamburgerOpen span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.hamburgerOpen span:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-.hamburgerOpen span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
+.hamburgerOpen span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburgerOpen span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburgerOpen span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ─── Menu mobile ─────────────────────────────────────── */
 .mobileMenu {
@@ -322,20 +324,9 @@
 /* ─── Responsivo ──────────────────────────────────────── */
 @media (max-width: 980px) {
   .nav { padding: 0 1.5rem; }
-
   .navLinks { gap: 0.8rem; }
-
   .navLinks a { font-size: 0.68rem; }
-
-  .btnGhost,
-  .btnCta { padding: 0.38rem 0.8rem; font-size: 0.72rem; }
-}
-
-@media (max-width: 860px) {
-  .navLinks { display: none; }
-  .navActions { display: none; }
-  .hamburger { display: flex; }
-  .mobileMenu { display: flex; }
+  .btnGhost, .btnCta { padding: 0.38rem 0.8rem; font-size: 0.72rem; }
 }
 
 @media (max-width: 860px) {
